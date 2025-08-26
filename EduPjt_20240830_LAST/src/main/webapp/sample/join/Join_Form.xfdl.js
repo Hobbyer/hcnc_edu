@@ -253,7 +253,6 @@
 
         	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
         };
-
         });
         
         // Regist UI Components Event

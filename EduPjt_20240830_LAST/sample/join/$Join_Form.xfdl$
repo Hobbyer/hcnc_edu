@@ -83,8 +83,7 @@ this.join_btn_submit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventI
 	var inAsync = true;
 	
 	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
-};
-]]></Script>
+};]]></Script>
     <Objects>
       <Dataset id="join_user">
         <ColumnInfo>
