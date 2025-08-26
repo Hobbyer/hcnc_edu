@@ -42,6 +42,7 @@
 
             obj = new Edit("join_ed_pw","406","160","227","38",null,null,null,null,null,null,this);
             obj.set_taborder("2");
+            obj.set_password("true");
             this.addChild(obj.name, obj);
 
             obj = new Static("join_st_pw","259","152","115","55",null,null,null,null,null,null,this);
@@ -193,9 +194,54 @@
         
         // User Script
         this.registerScript("Join_Form.xfdl", function() {
-
+        this.Join_Form_onload = function(obj,e)
+        {
+        	tarce(">>>>><<<<<<");
+        };
 
         this.join_btn_idChk_onclick = function(obj,e)
+        {
+
+        	var strSvcID = "idChk";	  // 트랜잭션 아이디
+        	var strUrl = "svc::idChk.do"; // 컨트롤러에 보내는거
+        	var strInDatasets = "idChk=join_user";
+        	var strOutDatasets = "join_result=idChk_result";
+        	var strArg = "";
+        	var callBack = "fn_callBack";
+        	var inAsync = true;
+
+        	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
+
+        };
+
+
+        this.fn_callBack = function(svcID, errCD, errMSG){
+
+        	if(svcID === "idChk"){
+        		var message = this.join_result.getColumn(0, "message");
+
+        		this.alert(message);
+
+        		this.join_result.clearData();
+        	}
+        	else if (svcID === "joinUser"){
+        		var message = this.join_result.getColumn(0, "message");
+        		var resultValue = this.join_result.getColumn(0, "result_value");
+
+        		this.alert(message);
+
+        		if(resultValue === 1){
+
+        		} else {
+        			this.reload();
+        		}
+
+
+        		this.join_result.clearData();
+        	}
+        };
+
+        this.join_btn_submit_onclick = function(obj,e)
         {
         	var strSvcID = "joinUser";	  // 트랜잭션 아이디
         	var strUrl = "svc::joinUser.do"; // 컨트롤러에 보내는거
@@ -213,7 +259,11 @@
         // Regist UI Components Event
         this.on_initEvent = function()
         {
+            this.addEventHandler("onload",this.Join_Form_onload,this);
+            this.join_ed_id.addEventHandler("onchanged",this.join_ed_id_onchanged,this);
             this.join_btn_idChk.addEventHandler("onclick",this.join_btn_idChk_onclick,this);
+            this.join_btn_addr.addEventHandler("onclick",this.join_btn_addr_onclick,this);
+            this.join_btn_submit.addEventHandler("onclick",this.join_btn_submit_onclick,this);
         };
         this.loadIncludeScript("Join_Form.xfdl");
         this.loadPreloadList();

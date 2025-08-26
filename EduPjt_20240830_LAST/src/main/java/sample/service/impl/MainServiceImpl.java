@@ -1,5 +1,6 @@
 package sample.service.impl;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,10 +53,27 @@ public class MainServiceImpl implements MainService {
 	}
 	
 
-	public HashMap<String, Object> joinUser(HashMap<String, Object> param) {
+	public HashMap<String, Object> idChk(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		
-		return mainMapper.joinUser(param);
+		return mainMapper.idChk(param);
 		
+	}
+
+
+	@Override
+	public int joinUser(Map<String, Object> param) throws NoSuchAlgorithmException {
+		// TODO Auto-generated method stub
+		
+		String inputPw = (String) param.get("user_pw");
+		String salt = ShaUtil.getSalt();
+		
+		String user_pw = ShaUtil.sha256Encode(inputPw, salt);
+		
+		param.put("user_salt", salt);
+		param.replace("user_pw", user_pw);
+		
+		
+		return mainMapper.joinUser(param);
 	}
 }

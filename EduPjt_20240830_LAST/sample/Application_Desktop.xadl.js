@@ -8,7 +8,9 @@
 			// global dataobject
 		
             // global dataset
-
+            obj = new Dataset("gds_userInfo", this);
+            obj._setContents("<ColumnInfo><Column id=\"user_id\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this._addDataset(obj.name, obj);
             
             // global variable
 

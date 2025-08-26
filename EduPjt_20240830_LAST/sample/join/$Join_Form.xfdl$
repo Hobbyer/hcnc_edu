@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="Join_Form" width="1280" height="720" titletext="New Form">
+  <Form id="Join_Form" width="1280" height="720" titletext="New Form" onload="Join_Form_onload">
     <Layouts>
       <Layout height="720" mobileorientation="landscape" width="1280">
         <Static id="join_st_id" taborder="0" text="아이디" left="260" top="86" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
-        <Edit id="join_ed_id" taborder="1" left="407" top="94" width="227" height="38"/>
-        <Edit id="join_ed_pw" taborder="2" left="406" top="160" width="227" height="38"/>
+        <Edit id="join_ed_id" taborder="1" left="407" top="94" width="227" height="38" onchanged="join_ed_id_onchanged"/>
+        <Edit id="join_ed_pw" taborder="2" left="406" top="160" width="227" height="38" password="true"/>
         <Static id="join_st_pw" taborder="3" text="비밀번호" left="259" top="152" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
         <Edit id="join_ed_name" taborder="4" left="405" top="232" width="227" height="38"/>
         <Static id="join_st_name" taborder="5" text="이름" left="259" top="223" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
@@ -20,15 +20,60 @@
         <Button id="join_btn_idChk" taborder="14" text="중복체크" left="654" top="94" width="112" height="38" onclick="join_btn_idChk_onclick"/>
         <Button id="join_btn_eamil" taborder="15" text="인증" left="653" top="296" width="112" height="38"/>
         <Button id="join_btn_emailChk" taborder="16" text="확인" left="653" top="369" width="112" height="38"/>
-        <Button id="join_btn_addr" taborder="17" text="주소 검색" left="652" top="436" width="112" height="38"/>
+        <Button id="join_btn_addr" taborder="17" text="주소 검색" left="652" top="436" width="112" height="38" onclick="join_btn_addr_onclick"/>
         <Button id="join_btn_cancel" taborder="18" text="취소" left="531" top="610" width="112" height="38"/>
-        <Button id="join_btn_submit" taborder="19" text="회원가입" left="370" top="610" width="112" height="38"/>
+        <Button id="join_btn_submit" taborder="19" text="회원가입" left="370" top="610" width="112" height="38" onclick="join_btn_submit_onclick"/>
       </Layout>
     </Layouts>
-    <Script type="xscript5.1"><![CDATA[
+    <Script type="xscript5.1"><![CDATA[this.Join_Form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	tarce(">>>>><<<<<<");
+};
 
 this.join_btn_idChk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {	
+
+	var strSvcID = "idChk";	  // 트랜잭션 아이디
+	var strUrl = "svc::idChk.do"; // 컨트롤러에 보내는거
+	var strInDatasets = "idChk=join_user";
+	var strOutDatasets = "join_result=idChk_result";
+	var strArg = "";
+	var callBack = "fn_callBack";
+	var inAsync = true;
+	
+	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
+	
+};
+
+
+this.fn_callBack = function(svcID, errCD, errMSG){
+	
+	if(svcID === "idChk"){
+		var message = this.join_result.getColumn(0, "message");
+		
+		this.alert(message);
+		
+		this.join_result.clearData();
+	}
+	else if (svcID === "joinUser"){
+		var message = this.join_result.getColumn(0, "message");
+		var resultValue = this.join_result.getColumn(0, "result_value");
+		
+		this.alert(message);
+		
+		if(resultValue === 1){
+		
+		} else {
+			this.reload();
+		}
+		
+		
+		this.join_result.clearData();
+	}
+};
+
+this.join_btn_submit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
 	var strSvcID = "joinUser";	  // 트랜잭션 아이디
 	var strUrl = "svc::joinUser.do"; // 컨트롤러에 보내는거
 	var strInDatasets = "join_user=join_user";

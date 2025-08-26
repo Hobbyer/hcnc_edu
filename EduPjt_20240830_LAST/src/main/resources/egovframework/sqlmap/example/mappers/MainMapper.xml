@@ -8,10 +8,24 @@
 				AND USER_ID = #{user_id}
 	</select>
 	
-	<select id="joinUser" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<select id="idChk" parameterType="java.util.Map" resultType="java.util.HashMap">
 		SELECT USER_ID
 			FROM USERS
 			WHERE 1=1
 				AND USER_ID = #{user_id}
 	</select>
+	
+	<insert id="joinUser" parameterType="java.util.Map">
+		INSERT INTO USERS (USER_ID, PASS, NAME, MAIL, ADDRESS, SALT, RECOMMEND_USER)
+			VALUES (
+				#{user_id}
+				, #{user_pw}
+				, #{user_name}
+				, #{user_email}
+				, #{user_addr}
+				, #{user_salt}
+				, #{user_recommend}
+			)
+	</insert>
+	
 </mapper>

@@ -1,5 +1,6 @@
 package sample.web;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class MainController {
 			} else {
 				System.out.println("로그인에 실패하였습니다.");
 				
-				result.addVariable("ds_login", userCheck);
+				result.addDataSet("ds_login", userCheck);
 			}
 		} catch(Exception e) {
 			System.out.println("오류발생!");
@@ -56,32 +57,76 @@ public class MainController {
 		return result;
 	}
 	
-	@RequestMapping(value="/joinUser.do")
-	public NexacroResult joinUser(@ParamDataSet(name="join_user", required = false) HashMap<String, Object> param) {
+	@RequestMapping(value="/idChk.do")
+	public NexacroResult idChk(@ParamDataSet(name="idChk", required = false) Map<String, Object> param) {
+		
+		System.out.println(param);
 		
 		NexacroResult result = new NexacroResult();
 		
-		HashMap<String, Object> userCheck = mainService.joinUser(param);
+		HashMap<String, Object> resultData = new HashMap<String, Object>();
+		
+		try {
+			HashMap<String, Object> userCheck = mainService.idChk(param);
+			
+			if(userCheck != null) {
+				System.out.println("중복된 회원이 존재 합니다.");
+				
+				resultData.put("message", "중복된 회원이 존재합니다.");
+				resultData.put("result_value", 0);
+				
+				result.addDataSet("idChk_result", resultData);
+			} else {
+				System.out.println("사용가능한 아이디입니다.");
+				
+				resultData.put("message", "사용가능한 아이디입니다.");
+				resultData.put("result_value", 1);
+				
+				result.addDataSet("idChk_result", resultData);
+			}
+		} catch(Exception e) {
+			System.out.println("오류발생!");
+			result.setErrorCode(-1);
+			result.setErrorMsg("catch 오류>>>>");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/joinUser.do")
+	public NexacroResult joinUser(@ParamDataSet(name="join_user", required = false) Map<String, Object> param) throws NoSuchAlgorithmException {
+		
+		NexacroResult result = new NexacroResult();
+		
+		System.out.println(param);
 		
 		HashMap<String, Object> resultData = new HashMap<String, Object>();
 		
-		if(userCheck.get("USER_ID") != null) {
-			System.out.println("중복된 회원이 존재 합니다.");
+		try {
+			int insertResult = mainService.joinUser(param);
 			
-			resultData.put("message", "중복된 회원이 존재합니다.");
-			resultData.put("result_value", 0);
-			
-			result.addDataSet("join_result", resultData);
-		} else {
-			System.out.println("사용가능한 아이디입니다.");
-			
-			resultData.put("message", "사용가능한 아이디입니다.");
-			resultData.put("result_value", 1);
-			
-			result.addDataSet("join_result", resultData);
+			if(insertResult == 1) {
+				System.out.println("회원가입이 완료되었습니다.");
+				
+				resultData.put("message", "회원가입이 완료되었습니다.");
+				resultData.put("result_value", 1);
+				
+				result.addDataSet("join_result", resultData);
+			} else {
+				System.out.println("회원가입 진행중 오류가 발생했습니다.");
+				
+				resultData.put("message", "회원가입 중 오류가 발생했습니다. 다시 시도해주세요!");
+				resultData.put("result_value", 0);
+				
+				result.addDataSet("join_result", resultData);
+			}
+		} catch(Exception e) {
+			System.out.println("오류발생!");
+			result.setErrorCode(-1);
+			result.setErrorMsg("catch 오류>>>>");
 		}
 		
 		return result;
+		
 	}
 	 
 }
