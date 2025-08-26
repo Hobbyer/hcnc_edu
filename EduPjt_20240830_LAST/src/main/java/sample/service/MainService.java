@@ -7,4 +7,6 @@ public interface MainService {
 
 	HashMap<String, Object> selectUser(Map<String, Object> dsUser);
 
+	HashMap<String, Object> joinUser(HashMap<String, Object> param);
+
 }

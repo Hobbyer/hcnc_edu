@@ -59,9 +59,29 @@ public class MainController {
 	@RequestMapping(value="/joinUser.do")
 	public NexacroResult joinUser(@ParamDataSet(name="join_user", required = false) HashMap<String, Object> param) {
 		
-		System.out.println(param);
+		NexacroResult result = new NexacroResult();
 		
-		return null;
+		HashMap<String, Object> userCheck = mainService.joinUser(param);
+		
+		HashMap<String, Object> resultData = new HashMap<String, Object>();
+		
+		if(userCheck.get("USER_ID") != null) {
+			System.out.println("중복된 회원이 존재 합니다.");
+			
+			resultData.put("message", "중복된 회원이 존재합니다.");
+			resultData.put("result_value", 0);
+			
+			result.addDataSet("join_result", resultData);
+		} else {
+			System.out.println("사용가능한 아이디입니다.");
+			
+			resultData.put("message", "사용가능한 아이디입니다.");
+			resultData.put("result_value", 1);
+			
+			result.addDataSet("join_result", resultData);
+		}
+		
+		return result;
 	}
 	 
 }

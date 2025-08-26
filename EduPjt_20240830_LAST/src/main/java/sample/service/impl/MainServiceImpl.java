@@ -50,4 +50,12 @@ public class MainServiceImpl implements MainService {
 			return null;
 		}
 	}
+	
+
+	public HashMap<String, Object> joinUser(HashMap<String, Object> param) {
+		// TODO Auto-generated method stub
+		
+		return mainMapper.joinUser(param);
+		
+	}
 }

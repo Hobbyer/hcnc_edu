@@ -18,7 +18,7 @@
             
             // Object(Dataset, ExcelExportObject) Initialize
             obj = new Dataset("join_user", this);
-            obj._setContents("<ColumnInfo><Column id=\"user_id\" type=\"STRING\" size=\"256\"/><Column id=\"user_pw\" type=\"STRING\" size=\"256\"/><Column id=\"user_name\" type=\"STRING\" size=\"256\"/><Column id=\"user_email\" type=\"STRING\" size=\"256\"/><Column id=\"user_addr\" type=\"STRING\" size=\"256\"/><Column id=\"user_addrChk\" type=\"STRING\" size=\"256\"/><Column id=\"user_recommend\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            obj._setContents("<ColumnInfo><Column id=\"user_id\" type=\"STRING\" size=\"256\"/><Column id=\"user_pw\" type=\"STRING\" size=\"256\"/><Column id=\"user_name\" type=\"STRING\" size=\"256\"/><Column id=\"user_email\" type=\"STRING\" size=\"256\"/><Column id=\"user_emailChk\" type=\"STRING\" size=\"256\"/><Column id=\"user_addr\" type=\"STRING\" size=\"256\"/><Column id=\"user_recommend\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
             this.addChild(obj.name, obj);
 
 
@@ -154,7 +154,33 @@
             this.addLayout(obj.name, obj);
             
             // BindItem Information
+            obj = new BindItem("item0","join_ed_id","value","join_user","user_id");
+            this.addChild(obj.name, obj);
+            obj.bind();
 
+            obj = new BindItem("item1","join_ed_pw","value","join_user","user_pw");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","join_ed_name","value","join_user","user_name");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","join_ed_email","value","join_user","user_email");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","join_ed_emailChk","value","join_user","user_emailChk");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","join_ed_addr","value","join_user","user_addr");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item6","join_ed_recommend","value","join_user","user_recommend");
+            this.addChild(obj.name, obj);
+            obj.bind();
             
             // TriggerItem Information
 
@@ -171,14 +197,6 @@
 
         this.join_btn_idChk_onclick = function(obj,e)
         {
-        	var userId = this.join_user.getColumn(0, "user_id");
-        	var pw = this.join_user.getColumn(0, "user_pw");
-        	var name = this.join_user.getColumn(0, "user_name");
-        	var email = this.join_user.get(0, "user_email");
-        	var addr = this.join_user.get(0, "user_addr");
-        	var addrChk = this.join_user.get(0, "user_addrChk");
-        	var recommend = this.join_user.get(0, "user_recommend");
-
         	var strSvcID = "joinUser";	  // 트랜잭션 아이디
         	var strUrl = "svc::joinUser.do"; // 컨트롤러에 보내는거
         	var strInDatasets = "join_user=join_user";

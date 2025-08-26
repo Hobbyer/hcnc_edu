@@ -28,15 +28,7 @@
     <Script type="xscript5.1"><![CDATA[
 
 this.join_btn_idChk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var userId = this.join_user.getColumn(0, "user_id");
-	var pw = this.join_user.getColumn(0, "user_pw");
-	var name = this.join_user.getColumn(0, "user_name");
-	var email = this.join_user.get(0, "user_email");
-	var addr = this.join_user.get(0, "user_addr");
-	var addrChk = this.join_user.get(0, "user_addrChk");
-	var recommend = this.join_user.get(0, "user_recommend");
-	
+{	
 	var strSvcID = "joinUser";	  // 트랜잭션 아이디
 	var strUrl = "svc::joinUser.do"; // 컨트롤러에 보내는거
 	var strInDatasets = "join_user=join_user";
@@ -55,8 +47,8 @@ this.join_btn_idChk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
           <Column id="user_pw" type="STRING" size="256"/>
           <Column id="user_name" type="STRING" size="256"/>
           <Column id="user_email" type="STRING" size="256"/>
+          <Column id="user_emailChk" type="STRING" size="256"/>
           <Column id="user_addr" type="STRING" size="256"/>
-          <Column id="user_addrChk" type="STRING" size="256"/>
           <Column id="user_recommend" type="STRING" size="256"/>
         </ColumnInfo>
         <Rows>
@@ -70,5 +62,14 @@ this.join_btn_idChk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
         </ColumnInfo>
       </Dataset>
     </Objects>
+    <Bind>
+      <BindItem id="item0" compid="join_ed_id" propid="value" datasetid="join_user" columnid="user_id"/>
+      <BindItem id="item1" compid="join_ed_pw" propid="value" datasetid="join_user" columnid="user_pw"/>
+      <BindItem id="item2" compid="join_ed_name" propid="value" datasetid="join_user" columnid="user_name"/>
+      <BindItem id="item3" compid="join_ed_email" propid="value" datasetid="join_user" columnid="user_email"/>
+      <BindItem id="item4" compid="join_ed_emailChk" propid="value" datasetid="join_user" columnid="user_emailChk"/>
+      <BindItem id="item5" compid="join_ed_addr" propid="value" datasetid="join_user" columnid="user_addr"/>
+      <BindItem id="item6" compid="join_ed_recommend" propid="value" datasetid="join_user" columnid="user_recommend"/>
+    </Bind>
   </Form>
 </FDL>

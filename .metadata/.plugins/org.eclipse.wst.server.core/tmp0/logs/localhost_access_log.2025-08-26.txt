@@ -1869,3 +1869,6 @@
 0:0:0:0:0:0:0:1 - - [26/Aug/2025:13:29:52 +0900] "GET /join HTTP/1.1" 404 1028
 0:0:0:0:0:0:0:1 - - [26/Aug/2025:13:29:53 +0900] "GET /images/egovframework/example/error_bg.jpg HTTP/1.1" 404 1028
 0:0:0:0:0:0:0:1 - - [26/Aug/2025:14:19:30 +0900] "POST /selectUser.do HTTP/1.1" 200 490
+127.0.0.1 - - [26/Aug/2025:14:56:09 +0900] "GET / HTTP/1.1" 200 468
+127.0.0.1 - - [26/Aug/2025:18:10:01 +0900] "GET / HTTP/1.1" 200 468
+0:0:0:0:0:0:0:1 - - [26/Aug/2025:18:20:18 +0900] "GET /WEB-INF/classes/sample/web/MainController.java HTTP/1.1" 404 722
