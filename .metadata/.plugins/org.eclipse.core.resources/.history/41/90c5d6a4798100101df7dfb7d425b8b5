@@ -1,0 +1,17 @@
+package sample.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
+import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
+
+@Controller
+public class MainController {
+	
+	@RequestMapping(value="/EduPjt_20240830_LAST/selectUser.do", method="")
+	public NexacroResult(@ParamDataSet(name="ds_user", required = false) Map<String, Object> dsUser) {
+		return null;
+	}
+	 
+}

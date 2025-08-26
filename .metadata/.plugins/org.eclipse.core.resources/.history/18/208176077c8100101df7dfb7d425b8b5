@@ -1,0 +1,16 @@
+package sample.service.impl;
+
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import sample.service.MainService;
+
+@Service
+public class MainServiceImpl implements MainService {
+
+	public Map<String, Object> selectUser(Map<String, Object> dsUser){
+		
+		return null;
+	}
+}

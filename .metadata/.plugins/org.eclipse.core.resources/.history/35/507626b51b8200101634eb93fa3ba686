@@ -1,0 +1,9 @@
+package sample.service;
+
+import java.util.Map;
+
+public interface MainService {
+
+	Map<String, Object> selectUser(Map<String, Object> dsUser);
+
+}

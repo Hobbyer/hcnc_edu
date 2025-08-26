@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sample.service.impl.CodeMapper">
+	<select id="selectDeptCode" parameterType="java.util.Map" resultType="java.util.Map">
+	/*sample.service.impl.CodeMapper."selectDeptCode"*/
+	SELECT dept_cd
+	     , dept_nm
+	  FROM code_dept
+	 WHERE 1=1
+     <if test="SEARCH_WORD != null and SEARCH_WORD != ''">
+       <if test="SEARCH_TYPE == 'ALL'">
+   	   AND (dept_cd LIKE CONCAT('%',#{SEARCH_WORD},'%')
+            OR dept_nm LIKE CONCAT('%',#{SEARCH_WORD},'%'))
+       </if>
+	   <if test="SEARCH_TYPE == 'CODE'">
+	   AND dept_cd LIKE CONCAT('%',#{SEARCH_WORD},'%')
+	   </if>
+	   <if test="SEARCH_TYPE == 'CODE_NM'">
+	   AND dept_nm like CONCAT('%',#{SEARCH_WORD},'%')
+	   </if>
+	 </if>
+	</select>
+	
+	<select id="selectDeptSubCode" parameterType="java.util.Map" resultType="java.util.Map">
+	/*sample.service.impl.CodeMapper."selectDeptSubCode"*/
+	SELECT dept_cd
+	     , dept_sub_cd
+	     , dept_sub_nm
+	  FROM code_dept_sub
+	 WHERE 1=1
+     <if test="SEARCH_WORD != null and SEARCH_WORD != ''">
+       <if test="SEARCH_TYPE == 'ALL'">
+   	   AND (dept_sub_cd LIKE CONCAT('%',#{SEARCH_WORD},'%')
+            OR dept_sub_nm LIKE CONCAT('%',#{SEARCH_WORD},'%'))
+       </if>
+	   <if test="SEARCH_TYPE == 'CODE'">
+	   AND dept_sub_cd LIKE CONCAT('%',#{SEARCH_WORD},'%')
+	   </if>
+	   <if test="SEARCH_TYPE == 'CODE_NM'">
+	   AND dept_sub_nm like CONCAT('%',#{SEARCH_WORD},'%')
+	   </if>
+	 </if>
+	   <if test="dept_cd != null and dept_cd != ''">
+	   AND dept_cd = #{dept_cd}
+	   </if>
+	</select>
+	
+	<select id="selectJikwiCode" parameterType="java.util.Map" resultType="java.util.Map">
+	/*sample.service.impl.CodeMapper."selectJikwiCode"*/
+	SELECT jikwi_cd
+	     , jikwi_nm
+	  FROM code_jikwi
+	 WHERE 1=1
+     <if test="SEARCH_WORD != null and SEARCH_WORD != ''">
+       <if test="SEARCH_TYPE == 'ALL'">
+   	   AND (jikwi_cd LIKE CONCAT('%',#{SEARCH_WORD},'%')
+            OR jikwi_nm LIKE CONCAT('%',#{SEARCH_WORD},'%'))
+       </if>
+	   <if test="SEARCH_TYPE == 'CODE'">
+	   AND jikwi_cd LIKE CONCAT('%',#{SEARCH_WORD},'%')
+	   </if>
+	   <if test="SEARCH_TYPE == 'CODE_NM'">
+	   AND jikwi_nm like CONCAT('%',#{SEARCH_WORD},'%')
+	   </if>
+	 </if>
+	</select>
+	
+	<select id="chkCodeDept" parameterType="java.util.Map" resultType="Integer">
+	/*sample.service.impl.CodeMapper.chkCodeDept*/
+	SELECT COUNT(*)
+	  FROM code_dept
+	 WHERE dept_cd = #{CODE}
+	</select>
+	
+	<insert id="insertCodeDept" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.insertCodeDept*/
+	INSERT INTO code_dept
+	( dept_cd
+	, dept_nm
+	)
+	VALUES 
+	( #{CODE}
+	, #{CODE_NM}
+	)
+	</insert>
+	
+	<update id="updateCodeDept" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.updateCodeDept*/
+	UPDATE code_dept
+	   SET dept_nm = #{CODE_NM}
+	 WHERE dept_cd = #{CODE}
+	</update>
+	
+	<delete id="deleteCodeDept" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.deleteCodeDept*/
+	DELETE FROM code_dept
+	 WHERE dept_cd = #{CODE}
+	</delete>
+	
+	<select id="chkCodeDeptSub" parameterType="java.util.Map" resultType="Integer">
+	/*sample.service.impl.CodeMapper.chkCodeDeptSub*/
+	SELECT COUNT(*)
+	  FROM code_dept_sub
+	 WHERE dept_sub_cd = #{CODE}
+	</select>
+	
+	<insert id="insertCodeDeptSub" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.insertCodeDeptSub*/
+	INSERT INTO code_dept_sub
+	( dept_sub_cd
+	, dept_sub_nm
+	)
+	VALUES 
+	( #{CODE}
+	, #{CODE_NM}
+	)
+	</insert>
+	
+	<update id="updateCodeDeptSub" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.updateCodeDeptSub*/
+	UPDATE code_dept_sub
+	   SET dept_sub_nm = #{CODE_NM}
+	 WHERE dept_sub_cd = #{CODE}
+	</update>
+		
+	<delete id="deleteCodeDeptSub" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.deleteCodeDeptSub*/
+	DELETE FROM code_dept_sub
+	 WHERE 1=1
+	   AND dept_sub_cd = #{CODE}
+	   AND dept_cd = #{CODE}
+	</delete>
+	
+	<select id="chkCodeJikwi" parameterType="java.util.Map" resultType="Integer">
+	/*sample.service.impl.CodeMapper.chkCodeJikwi*/
+	SELECT COUNT(*)
+	  FROM code_jikwi
+	 WHERE jikwi_cd = #{CODE}
+	</select>
+	
+	<insert id="insertCodeJikwi" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.insertCodeJikwi*/
+	INSERT INTO code_jikwi
+	( jikwi_cd
+	, jikwi_nm
+	)
+	VALUES 
+	( #{CODE}
+	, #{CODE_NM}
+	)
+	</insert>
+	
+	<update id="updateCodeJikwi" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.updateCodeJikwi*/
+	UPDATE code_jikwi
+	   SET jikwi_nm = #{CODE_NM}
+	 WHERE jikwi_cd = #{CODE}
+	</update>
+	
+	<delete id="deleteCodeJikwi" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.deleteCodeJikwi*/
+	DELETE FROM code_jikwi
+	 WHERE jikwi_cd = #{CODE}
+	</delete>
+	
+	<select id="selectCodeMst" parameterType="java.util.Map" resultType="java.util.Map">
+	/*sample.service.impl.CodeMapper.selectCodeMst*/
+	SELECT CODE
+	     , CODE_NM
+	  FROM CMMN_CD_MST
+	 WHERE 1=1
+	   <if test="SEARCH_WORD != null and SEARCH_WORD != ''">
+		   <if test="SEARCH_TYPE == 'ALL'">
+	   AND (CODE LIKE CONCAT('%',#{SEARCH_WORD},'%')
+	        OR CODE_NM LIKE CONCAT('%',#{SEARCH_WORD},'%')
+	       )
+		   </if>
+		   <if test="SEARCH_TYPE == 'CODE'">
+	   AND CODE LIKE CONCAT('%',#{SEARCH_WORD},'%')
+		   </if>
+		   <if test="SEARCH_TYPE == 'CODE_NM'">
+	   AND CODE_NM LIKE CONCAT('%',#{SEARCH_WORD},'%')
+		   </if>
+	   </if>
+	</select>
+	
+	<insert id="saveCodeMst" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.saveCodeMst*/
+	INSERT INTO CMMN_CD_MST
+	( CODE
+	, CODE_NM
+	)
+	VALUES 
+	( #{CODE}
+	, #{CODE_NM}
+	)
+	ON DUPLICATE KEY 
+	UPDATE CODE_NM = #{CODE_NM}
+	</insert>
+	
+	<delete id="deleteCodeMst" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.deleteCodeMst*/
+	DELETE FROM CMMN_CD_MST
+	 WHERE CODE = #{CODE}
+	</delete>
+	
+	<select id="checkCodeMst" parameterType="java.util.Map" resultType="Integer">
+	/*sample.service.impl.CodeMapper.checkCodeMst*/
+	SELECT COUNT(1)
+	  FROM CMMN_CD_MST
+	 WHERE CODE = #{CODE}
+	</select>
+	
+	<insert id="insertCodeMst" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.insertCodeMst*/
+	INSERT INTO CMMN_CD_MST
+	( CODE
+	, CODE_NM
+	)
+	VALUES 
+	( #{CODE}
+	, #{CODE_NM}
+	)
+	</insert>
+	
+	<update id="updateCodeMst" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.updateCodeMst*/
+	UPDATE CMMN_CD_MST
+	   SET CODE_NM = #{CODE_NM}
+	 WHERE CODE = #{CODE}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectCodeDtl" parameterType="java.util.Map" resultType="java.util.Map">
+	/*sample.service.impl.CodeMapper.selectCodeDtl*/
+	SELECT CODE
+	     , CODE_NM
+	  FROM CMMN_CD_DTL
+	 WHERE 1=1
+	   <if test="SEARCH_WORD != null and SEARCH_WORD != ''">
+		   <if test="SEARCH_TYPE == 'ALL'">
+	   AND (CODE LIKE CONCAT('%',#{SEARCH_WORD},'%')
+	        OR CODE_NM LIKE CONCAT('%',#{SEARCH_WORD},'%')
+	       )
+		   </if>
+		   <if test="SEARCH_TYPE == 'CODE'">
+	   AND CODE LIKE CONCAT('%',#{SEARCH_WORD},'%')
+		   </if>
+		   <if test="SEARCH_TYPE == 'CODE_NM'">
+	   AND CODE_NM LIKE CONCAT('%',#{SEARCH_WORD},'%')
+		   </if>
+	   </if>
+	   AND PT_CODE = #{PT_CODE}
+	</select>
+	
+	<insert id="saveCodeDtl" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.saveCodeMst*/
+	INSERT INTO CMMN_CD_DTL
+	( CODE
+	, CODE_NM
+	, PT_CODE
+	)
+	VALUES 
+	( #{CODE}
+	, #{CODE_NM}
+	, #{PT_CODE}
+	)
+	ON DUPLICATE KEY 
+	UPDATE CODE_NM = #{CODE_NM}
+	</insert>
+	
+	<delete id="deleteCodeDtl" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.deleteCodeMst*/
+	DELETE FROM CMMN_CD_DTL
+	 WHERE CODE = #{CODE}
+	</delete>
+	
+	<select id="checkCodeDtl" parameterType="java.util.Map" resultType="Integer">
+	/*sample.service.impl.CodeMapper.checkCodeDtl*/
+	SELECT COUNT(1)
+	  FROM CMMN_CD_DTL
+	 WHERE CODE = #{CODE}
+	   AND PT_CODE = #{PT_CODE}
+	</select>
+	
+	<insert id="insertCodeDtl" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.insertCodeDtl*/
+	INSERT INTO CMMN_CD_DTL
+	( CODE
+	, CODE_NM
+	, PT_CODE
+	)
+	VALUES 
+	( #{CODE}
+	, #{CODE_NM}
+	, #{PT_CODE}
+	)
+	</insert>
+	
+	<update id="updateCodeDtl" parameterType="java.util.Map">
+	/*sample.service.impl.CodeMapper.updateCodeDtl*/
+	UPDATE CMMN_CD_DTL
+	   SET CODE_NM = #{CODE_NM}
+	 WHERE CODE = #{CODE}
+	   AND PT_CODE = #{PT_CODE}
+	</update>
+	
+</mapper>

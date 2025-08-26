@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Join_Form" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="join_st_id" taborder="0" text="아이디" left="260" top="86" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
+        <Edit id="join_ed_id" taborder="1" left="407" top="94" width="227" height="38"/>
+        <Edit id="join_ed_pw" taborder="2" left="406" top="160" width="227" height="38"/>
+        <Static id="join_st_pw" taborder="3" text="비밀번호" left="259" top="152" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
+        <Edit id="join_ed_name" taborder="4" left="405" top="232" width="227" height="38"/>
+        <Static id="join_st_name" taborder="5" text="이름" left="259" top="223" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
+        <Edit id="join_ed_email" taborder="6" left="405" top="297" width="227" height="38"/>
+        <Static id="join_st_email" taborder="7" text="이메일" left="258" top="289" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
+        <Edit id="join_ed_emailChk" taborder="8" left="405" top="370" width="227" height="38"/>
+        <Static id="join_st_emailChk" taborder="9" text="인증번호" left="258" top="362" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
+        <Edit id="join_ed_addr" taborder="10" left="404" top="437" width="227" height="38"/>
+        <Static id="join_st_addr" taborder="11" text="주소" left="257" top="429" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
+        <Edit id="join_ed_recommend" taborder="12" left="404" top="511" width="227" height="38"/>
+        <Static id="join_st_recommend" taborder="13" text="추천인" left="257" top="503" width="115" height="55" textAlign="center" background="red" color="#ffffff" font="bold 12px/normal &quot;Gulim&quot;"/>
+        <Button id="join_btn_idChk" taborder="14" text="중복체크" left="654" top="94" width="112" height="38" onclick="join_btn_idChk_onclick"/>
+        <Button id="join_btn_eamil" taborder="15" text="인증" left="653" top="296" width="112" height="38"/>
+        <Button id="join_btn_emailChk" taborder="16" text="확인" left="653" top="369" width="112" height="38"/>
+        <Button id="join_btn_addr" taborder="17" text="주소 검색" left="652" top="436" width="112" height="38"/>
+        <Button id="join_btn_cancel" taborder="18" text="취소" left="531" top="610" width="112" height="38"/>
+        <Button id="join_btn_submit" taborder="19" text="회원가입" left="370" top="610" width="112" height="38"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+
+this.join_btn_idChk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var userId = this.join_user.getColumn(0, "user_id");
+	var pw = this.join_user.getColumn(0, "user_pw");
+	var name = this.join_user.getColumn(0, "user_name");
+	var email = this.join_user.get(0, "user_email");
+	var addr = this.join_user.get(0, "user_addr");
+	var addrChk = this.join_user.get(0, "user_addrChk");
+	var recommend = this.join_user.get(0, "user_recommend");
+	
+	var strSvcID = "joinUser";	  // 트랜잭션 아이디
+	var strUrl = "svc::joinUser.do"; // 컨트롤러에 보내는거
+	var strInDatasets = "join_user=join_user";
+	var strOutDatasets = "join_result=join_result";
+	var strArg = "";
+	var callBack = "fn_callBack";
+	var inAsync = true;
+	
+	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="join_user">
+        <ColumnInfo>
+          <Column id="user_id" type="STRING" size="256"/>
+          <Column id="user_pw" type="STRING" size="256"/>
+          <Column id="user_name" type="STRING" size="256"/>
+          <Column id="user_email" type="STRING" size="256"/>
+          <Column id="user_addr" type="STRING" size="256"/>
+          <Column id="user_addrChk" type="STRING" size="256"/>
+          <Column id="user_recommend" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="join_result">
+        <ColumnInfo>
+          <Column id="message" type="STRING" size="256"/>
+          <Column id="result_value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,35 @@
+package sample.service.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import sample.mapper.MainMapper;
+import sample.service.MainService;
+
+@Service
+public class MainServiceImpl implements MainService {
+	
+	@Autowired
+	private MainMapper mainMapper;
+
+	@Override
+	public Map<String, Object> selectUser(Map<String, Object> dsUser){
+		
+		String user_id = (String) dsUser.get("user_id");
+		String user_pw = (String) dsUser.get("user_pw");
+		
+		try {
+			Map<String, Object> getUser = mainMapper.selectUser(dsUser);
+			
+			String getSalt = (String) getUser.get("SALT");
+			
+		} catch(Exception e) {
+			System.out.println("쿼리 실행 중 오류발생");
+		}
+		
+		return mainMapper.selectUser(dsUser);
+	}
+}

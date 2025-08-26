@@ -1,0 +1,67 @@
+package sample.web;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
+import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
+
+import sample.service.MainService;
+
+@Controller
+public class MainController {
+	
+	@Autowired
+	private MainService mainService;
+	
+	@RequestMapping(value="/selectUser.do")
+	public NexacroResult selectUser(@ParamDataSet(name="ds_user", required = false) Map<String, Object> dsUser, HttpServletRequest request) {
+		
+		System.out.println(dsUser);
+		
+		NexacroResult result = new NexacroResult();
+		
+		try {
+			HashMap<String, Object> userCheck = mainService.selectUser(dsUser);
+			
+			if (userCheck.get("userPw").equals("O")) {
+				System.out.println("로그인성공");
+				
+				HttpSession session = request.getSession();
+				
+				session.setAttribute("login", userCheck);
+								
+				result.addDataSet("ds_login", userCheck);
+				
+			} else {
+				System.out.println("로그인에 실패하였습니다.");
+				
+				result.addVariable("ds_login", userCheck);
+			}
+		} catch(Exception e) {
+			System.out.println("오류발생!");
+			result.setErrorCode(-1);
+			result.setErrorMsg("catch 오류>>>>");
+		}
+		
+		System.out.println(result);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/joinUser.do")
+	public NexacroResult joinUser(@ParamDataSet(name="join_user", required = false) HashMap<String, Object> param) {
+		
+		System.out.println(param);
+		
+		return null;
+	}
+	 
+}

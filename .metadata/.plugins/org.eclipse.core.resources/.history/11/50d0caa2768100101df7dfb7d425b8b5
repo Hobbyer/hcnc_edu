@@ -1,0 +1,325 @@
+package sample.web;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
+import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
+import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
+
+import sample.service.CodeService;
+
+@Controller
+public class CodeController {
+  private Logger logger = LoggerFactory.getLogger(CodeController.class);
+	
+    @Resource(name = "codeService")
+    private CodeService service;
+    //부서 조회
+    @RequestMapping(value = "/EduPjt_20240830_LAST/selectDeptCode.do")
+    public NexacroResult selectDeptCode(@ParamDataSet(name = "ds_search", required = false) Map<String,Object> ds_param) {
+    	NexacroResult result = new NexacroResult();
+    	
+    	try {
+    		List<Map<String, Object>> selectDeptCode = service.selectDeptCode(ds_param);							//사용자 정보 조회
+			
+    		result.addDataSet("ds_dept", selectDeptCode);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    //하위부서 조회
+    @RequestMapping(value = "/EduPjt_20240830_LAST/selectDeptSubCode.do")
+    public NexacroResult selectDeptSubCode(@ParamDataSet(name = "ds_search", required = false) Map<String,Object> ds_param) {
+    	NexacroResult result = new NexacroResult();
+    	
+    	try {
+    		List<Map<String, Object>> selectDeptSubCode = service.selectDeptSubCode(ds_param);							//사용자 정보 조회
+    		
+    		result.addDataSet("ds_dept_sub", selectDeptSubCode);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    //직위 조회
+    @RequestMapping(value = "/EduPjt_20240830_LAST/selectJikwiCode.do")
+    public NexacroResult selectJikwiCode(@ParamDataSet(name = "ds_search", required = false) Map<String,Object> ds_param) {
+    	NexacroResult result = new NexacroResult();
+    	
+    	try {
+    		List<Map<String, Object>> selectJikwiCode = service.selectJikwiCode(ds_param);							//사용자 정보 조회
+    		
+    		result.addDataSet("ds_jikwi", selectJikwiCode);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    /**
+     * 부서 코드 저장(등록/수정)
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/EduPjt_20240830_LAST/saveCodeDept.do")
+    public NexacroResult saveCodeDept(@ParamDataSet(name = "ds_deptIst", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.saveCodeDept(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+
+    /**
+     * 부서 코드 삭제
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/EduPjt_20240830_LAST/deleteCodeDept.do")
+    public NexacroResult deleteCodeDept(@ParamDataSet(name = "ds_deptIst", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.deleteCodeDept(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    /**
+     * 하위 부서 코드 저장(등록/수정)
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/EduPjt_20240830_LAST/saveCodeDeptSub.do")
+    public NexacroResult saveCodeDeptSub(@ParamDataSet(name = "ds_dept", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.saveCodeDeptSub(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    /**
+     * 하위 부서 코드 삭제
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/EduPjt_20240830_LAST/deleteCodeDeptSub.do")
+    public NexacroResult deleteCodeDeptSub(@ParamDataSet(name = "ds_deptSubIst", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.deleteCodeDeptSub(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    /**
+     * 직위 코드 저장(등록/수정)
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/EduPjt_20240830_LAST/saveCodeJikwi.do")
+    public NexacroResult saveCodeJikwi(@ParamDataSet(name = "ds_jikwiIst", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.saveCodeJikwi(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+
+    /**
+     * 직위 코드 삭제
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/EduPjt_20240830_LAST/deleteCodeJikwi.do")
+    public NexacroResult deleteCodeJikwi(@ParamDataSet(name = "ds_jikwiIst", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.deleteCodeJikwi(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    /**
+     * 마스터 코드 리스트 조회
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/selectCodeMst.do")
+    public NexacroResult selectCodeMst(@ParamDataSet(name = "ds_Search", required = false) Map<String,Object> param) {
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		List<Map<String, Object>> ds_CodeMstList = service.selectCodeMst(param);
+    		result.addDataSet("ds_CodeMstList", ds_CodeMstList);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+
+    /**
+     * 마스터 코드 저장(등록/수정)
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/saveCodeMst.do")
+    public NexacroResult saveCodeMst(@ParamDataSet(name = "ds_CodeMst", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.saveCodeMst(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+
+    /**
+     * 마스터 코드 삭제
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/deleteCodeMst.do")
+    public NexacroResult deleteCodeMst(@ParamDataSet(name = "ds_CodeMst", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.deleteCodeMst(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * 세부 코드 리스트 조회
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/selectCodeDtl.do")
+    public NexacroResult selectCodeDtl(@ParamDataSet(name = "ds_SearchDtl", required = false) Map<String,Object> param) {
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		List<Map<String, Object>> ds_CodeDtlList = service.selectCodeDtl(param);
+    		result.addDataSet("ds_CodeDtlList", ds_CodeDtlList);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    /**
+     * 세부 코드 저장(등록/수정)
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/saveCodeDtl.do")
+    public NexacroResult saveCodeDtl(@ParamDataSet(name = "ds_CodeDtl", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.saveCodeDtl(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    /**
+     * 세부 코드 삭제
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/deleteCodeDtl.do")
+    public NexacroResult deleteCodeDtl(@ParamDataSet(name = "ds_CodeDtl", required = false) Map<String,Object> param){
+    	NexacroResult result = new NexacroResult();
+    	try {
+    		service.deleteCodeDtl(param);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+}

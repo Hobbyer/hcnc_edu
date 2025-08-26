@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+<fullyQualifiedTypeName name="com.nexacro.uiadapter17.spring.core.data.NexacroResult"/>
+<fullyQualifiedTypeName name="com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet"/>
+<fullyQualifiedTypeName name="sample.service.MainService"/>
+<fullyQualifiedTypeName name="org.apache.ibatis.annotations.Mapper"/>
+<fullyQualifiedTypeName name="egovframework.rte.psl.dataaccess.mapper.Mapper"/>
+</qualifiedTypeNameHistroy>

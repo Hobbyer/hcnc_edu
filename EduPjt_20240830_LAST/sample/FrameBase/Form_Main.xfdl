@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Main" width="1280" height="720" titletext="New Form" onload="Form_Main_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="st_id" taborder="0" text="아이디" left="100" top="61" width="110" height="69" textAlign="center" background="red" border="1px solid black" onclick="Static00_onclick" color="#ffffff" font="bold 14px/normal &quot;Gulim&quot;"/>
+        <Static id="st_pw" taborder="1" text="비밀번호" left="100" top="161" width="110" height="69" background="red" border="1px solid black" onclick="Static00_00_onclick" textAlign="center" color="#ffffff" font="bold 16px/normal &quot;Gulim&quot;"/>
+        <Edit id="ed_id" taborder="2" left="230" top="75" width="222" height="41" onchanged="ed_id_onchanged"/>
+        <Edit id="ed_pw" taborder="3" left="230" top="174" width="224" height="36"/>
+        <Button id="btn_login" taborder="4" text="로그인" left="476" top="112" width="157" height="56" textAlign="center" onclick="Button00_onclick" font="bold 14pt/normal &quot;Arial&quot;"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.Form_Main_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	trace(">>>");
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var userId = this.ds_user.getColumn(0, "user_id");
+	var userPw = this.ds_user.getColumn(0, "user_pw");
+	
+	var strSvcID = "selectUser";	  // 트랜잭션 아이디
+	var strUrl = "svc::selectUser.do"; // 컨트롤러에 보내는거
+	var strInDatasets = "ds_user=ds_user";
+	var strOutDatasets = "ds_login=ds_login";
+	var strArg = "";
+	var callBack = "fn_callBack";
+	var inAsync = true;
+	
+	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
+	
+};
+
+this.fn_callBack = function(svcID, errCD, errMSG){
+		if(svcID == "selectUser") {
+			
+			var glbAd = nexacro.getApplication();
+		
+		
+			var userId = this.ds_login.getColumn(0, "userId");
+			
+			if(userId != null && userId != ''){
+				alert("로그인 성공!");
+				
+				glbAd.gds_userInfo.setColumn(0, "user_id", this.ds_login.getColumn(0, "userId"));
+				
+				this.ds_login.clear();
+				
+				this.getOwnerFrame().set_formurl("board::Form_Board.xfdl");
+			} else {
+				alert("아이디 또는 비밀번호가 틀렸습니다.");
+				
+				this.ds_login.clear();
+			}
+
+		}
+	};
+]]></Script>
+    <Objects>
+      <Dataset id="ds_user">
+        <ColumnInfo>
+          <Column id="user_id" type="STRING" size="256"/>
+          <Column id="user_pw" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_login">
+        <ColumnInfo>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="userPw" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="ed_id" propid="value" datasetid="ds_user" columnid="user_id"/>
+      <BindItem id="item1" compid="ed_pw" propid="value" datasetid="ds_user" columnid="user_pw"/>
+    </Bind>
+  </Form>
+</FDL>
