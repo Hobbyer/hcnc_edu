@@ -45,11 +45,11 @@
         
         this.mainframe_createBodyFrame = function()
         {
-            var frame0 = new ChildFrame("WorkFrame",null,null,null,null,null,null,"FrameBase::Form_Main.xfdl",this);
+            var frame0 = new ChildFrame("WorkFrame",null,null,null,null,null,null,"board::Form_Board.xfdl",this);
             frame0.set_showtitlebar("false");
             frame0.set_showstatusbar("false");
             this.addChild(frame0.name, frame0);
-            frame0.set_formurl("FrameBase::Form_Main.xfdl");
+            frame0.set_formurl("board::Form_Board.xfdl");
 
             this.frame=frame0;
         };
