@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sample.mapper.BoardMapper">
+	
+	<select id="readBoardList" resultType="java.util.HashMap">
+		SELECT BOARD_CODE, BOARD_TITLE, BOARD_WRITER, BOARD_CONTENT, DATE_FORMAT(REG_DATE, "%Y-%m-%d") AS REG_DATE
+			FROM BOARDS
+	</select>
+	
+	<select id="searchBoardList" parameterType="java.util.Map" resultType="java.util.HashMap">
+		SELECT BOARD_CODE, BOARD_TITLE, BOARD_WRITER, BOARD_CONTENT, DATE_FORMAT(REG_DATE, "%Y-%m-%d") AS REG_DATE
+			FROM BOARDS
+			WHERE 1=1
+			<if test="BOARD_TITLE != null and BOARD_TITLE != ''">
+				AND BOARD_TITLE LIKE CONCAT('%', #{BOARD_TITLE}, '%')
+			</if>
+			<if test="BOARD_WRITER != null and BOARD_WRITER != ''">
+				AND BOARD_WRITER LIKE CONCAT('%', #{BOARD_WRITER}, '%')
+			</if>
+			<if test="FIRST_REG_DATE != null and FIRST_REG_DATE != ''">
+				AND DATE(REG_DATE) >= DATE(#{FIRST_REG_DATE})
+			</if>
+			<if test="SECOND_REG_DATE != null and SECOND_REG_DATE != ''">
+				AND DATE(REG_DATE) <![CDATA[ <= ]]> DATE(#{SECOND_REG_DATE})
+			</if>
+	</select>
+	
+	<select id="getBoard" parameterType="java.util.Map" resultType="java.util.HashMap">
+		SELECT BOARD_CODE, BOARD_TITLE, BOARD_WRITER, BOARD_CONTENT, DATE_FORMAT(REG_DATE, "%Y-%m-%d") AS REG_DATE
+			FROM BOARDS
+			WHERE 1=1
+				AND BOARD_CODE = #{BOARD_CODE}
+	</select>
+		
+</mapper>

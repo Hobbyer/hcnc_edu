@@ -40,22 +40,22 @@
 <!--     </bean> -->
     
     
-<!--     
+    
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
         <property name="url" value="jdbc:log4jdbc:mysql://192.168.10.37:2205/hcnc_edu" />
         <property name="username" value="hcnc_edu"/>
         <property name="password" value="P@ssw0rd"/>
     </bean>
- -->
-    
+
+<!--     
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
         <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/hcnc_edu" />
         <property name="username" value="root"/>
         <property name="password" value="mariadb"/>
     </bean>
-    
+ -->    
     
     <!-- oracle (POM에서 commons-dbcp, ojdbc(라이센스 사항으로 별도로 배포되지 않음) 관련 라이브러리 설정)
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">

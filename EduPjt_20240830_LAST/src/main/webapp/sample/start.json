@@ -110,7 +110,7 @@
         	"launch":"./Application_Desktop.xadl.js",
         	"quickview":"./Application_Desktop.xadl.quickview.js",
         	"form":[
-        				"./FrameBase/Form_Main.xfdl.js"
+        				"./board/Form_Board.xfdl.js"
         	]
         }
         ],  

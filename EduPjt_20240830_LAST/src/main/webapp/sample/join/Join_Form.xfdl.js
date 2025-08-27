@@ -231,7 +231,7 @@
         		this.alert(message);
 
         		if(resultValue === 1){
-
+        			this.getOwnerFrame().set_formurl("board::Form_Board.xfdl");
         		} else {
         			this.reload();
         		}
