@@ -25,6 +25,16 @@
             obj = new Dataset("ds_list", this);
             obj._setContents("<ColumnInfo><Column id=\"BOARD_CODE\" type=\"INT\" size=\"256\"/><Column id=\"BOARD_TITLE\" type=\"STRING\" size=\"256\"/><Column id=\"BOARD_WRITER\" type=\"STRING\" size=\"256\"/><Column id=\"BOARD_CONTENT\" type=\"STRING\" size=\"256\"/><Column id=\"REG_DATE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
             this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("ds_randomBox", this);
+            obj._setContents("<ColumnInfo><Column id=\"BOARD_TITLE\" type=\"STRING\" size=\"256\"/><Column id=\"BOARD_WRITER\" type=\"STRING\" size=\"256\"/><Column id=\"BOARD_CONTENT\" type=\"STRING\" size=\"256\"/><Column id=\"BOARD_CODE\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("ds_response", this);
+            obj._setContents("<ColumnInfo><Column id=\"message\" type=\"STRING\" size=\"256\"/><Column id=\"result_value\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
             
             // UI Components Initialize
             obj = new Static("board_st_static","74","28","338","52",null,null,null,null,null,null,this);
@@ -36,7 +46,7 @@
             obj = new Grid("Grid00","74","200","90.63%","326",null,null,null,null,null,null,this);
             obj.set_taborder("1");
             obj.set_binddataset("ds_list");
-            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"150\"/><Column size=\"150\"/><Column size=\"150\"/><Column size=\"150\"/></Columns><Rows><Row size=\"40\" band=\"head\"/><Row size=\"40\"/></Rows><Band id=\"head\"><Cell text=\"No\"/><Cell col=\"1\" text=\"제목\"/><Cell col=\"2\" text=\"작성자\"/><Cell col=\"3\" text=\"작성일자\"/></Band><Band id=\"body\"><Cell text=\"expr:currow + 1\"/><Cell col=\"1\" text=\"bind:BOARD_TITLE\"/><Cell col=\"2\" text=\"bind:BOARD_WRITER\"/><Cell col=\"3\" text=\"bind:REG_DATE\"/></Band></Format></Formats>");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"150\"/><Column size=\"150\"/><Column size=\"150\"/><Column size=\"195\"/><Column size=\"150\"/></Columns><Rows><Row size=\"40\" band=\"head\"/><Row size=\"40\"/></Rows><Band id=\"head\"><Cell text=\"No\"/><Cell col=\"1\" text=\"제목\"/><Cell col=\"2\" text=\"작성자\"/><Cell col=\"3\" text=\"내용\"/><Cell col=\"4\" text=\"작성일자\"/></Band><Band id=\"body\"><Cell text=\"expr:currow + 1\" edittype=\"normal\"/><Cell col=\"1\" text=\"bind:BOARD_TITLE\" edittype=\"normal\"/><Cell col=\"2\" text=\"bind:BOARD_WRITER\" edittype=\"normal\"/><Cell col=\"3\" edittype=\"normal\" text=\"bind:BOARD_CONTENT\"/><Cell col=\"4\" text=\"bind:REG_DATE\" edittype=\"date\"/></Band></Format></Formats>");
             this.addChild(obj.name, obj);
 
             obj = new Div("Div00","70","95","1162","83",null,null,null,null,null,null,this);
@@ -103,6 +113,11 @@
             obj.set_taborder("5");
             obj.set_text("행 삭제");
             this.addChild(obj.name, obj);
+
+            obj = new Button("btn_board_save","872","45","98","40",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text("저장");
+            this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this
             obj = new Layout("default","",1280,720,this,function(p){});
@@ -135,7 +150,7 @@
         };
         
         // User Script
-        this.registerScript("Form_Board.xfdl", function() {
+        this.registerScript("Form_Board_copy0.xfdl", function() {
 
         this.Form_Board_onload = function(obj,e)
         {
@@ -221,44 +236,79 @@
         	this.getOwnerFrame().set_formurl("board::Form_createBoard.xfdl");
         };
 
-        this.Grid00_oncelldblclick = function(obj,e)
-        {
-        	var boardIdx = this.ds_list.getColumn(e.row, "BOARD_CODE");
-
-        	var boardIdx2 = this.ds_list.getColumn(this.ds_list.rowposition, "BOARD_CODE");
-
-
-        	popup = new nexacro.ChildFrame;
-
-        	if(boardIdx != null && boardIdx != '' && boardIdx != undefined){
-
-        		var surl = "board::Form_BoardDetail.xfdl";
-
-        		var param = {
-        			boardIdx : boardIdx
-        		};
-        	} else {
-        		var surl = "board::Form_createBoard.xfdl";
-
-        		var param = {};
-        	}
-
-        	popup.init("updatePop", 0, 0, 800, 700, null, null, surl);
-        	popup.set_dragmovetype("all");
-        	popup.set_showtitlebar("상세보기");
-        	popup.showModal(this.getOwnerFrame(), param, this, "fn_popCallback", true);
-        };
+        // this.Grid00_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+        // {
+        // 	var boardIdx = this.ds_list.getColumn(e.row, "BOARD_CODE");
+        //
+        // 	var boardIdx2 = this.ds_list.getColumn(this.ds_list.rowposition, "BOARD_CODE");
+        //
+        //
+        // 	popup = new nexacro.ChildFrame;
+        //
+        // 	if(boardIdx != null && boardIdx != '' && boardIdx != undefined){
+        //
+        // 		var surl = "board::Form_BoardDetail.xfdl";
+        //
+        // 		var param = {
+        // 			boardIdx : boardIdx
+        // 		};
+        // 	} else {
+        // 		var surl = "board::Form_createBoard.xfdl";
+        //
+        // 		var param = {};
+        // 	}
+        //
+        // 	popup.init("updatePop", 0, 0, 800, 700, null, null, surl);
+        // 	popup.set_dragmovetype("all");
+        // 	popup.set_showtitlebar("상세보기");
+        // 	popup.showModal(this.getOwnerFrame(), param, this, "fn_popCallback", true);
+        // };
 
         this.btn_row_add_onclick = function(obj,e)
         {
-        	this.ds_list.addRow();
+        	var row = this.ds_list.addRow();
+
+        // 	this.ds_list.addColumn("ROW_TYPE", String());
+        // 	this.ds_list.setColumn(row, "ROW_TYPE", "I");
         };
 
         this.btn_row_delete_onclick = function(obj,e)
         {
-        	this.ds_list.deleteRow(this.Grid00.getSelectedRows());
+        	var row = this.Grid00.getSelectedRows();
+
+
+        // 	this.ds_list.addColumn("ROW_TYPE", String());
+        // 	this.ds_list.setColumn(row, "ROW_TYPE", "D");
+
+        	this.ds_list.deleteRow(row);
         };
 
+
+        this.btn_board_save_onclick = function(obj,e)
+        {
+
+
+
+        	// 1. 필드 변수 선언
+        	var strSvcId    = "boardCU";      // 서비스 ID
+        	var strSvcUrl   = "svc::boardCU.do";      // 호출 URL
+        	var inData      = "ds_list=ds_list:U";      // 입력 Dataset (ex: "ds_input=ds_input")
+        	var outData     = "ds_response=ds_response";      // 출력 Dataset (ex: "ds_output=ds_output")
+        	var strArg      = "";      // 전달 변수 (ex: "param1=value param2=value")
+        	var callBackFnc = "fn_callback";      // 콜백 함수명
+        	var bAsync		= true;   // (옵션) bAsync
+
+        	// 2. transaction 호출
+        	this.transaction(
+        		strSvcId,
+        		strSvcUrl,
+        		inData,
+        		outData,
+        		strArg,
+        		callBackFnc,
+        		bAsync
+        	);
+        };
         });
         
         // Regist UI Components Event
@@ -274,8 +324,9 @@
             this.board_btn_create.addEventHandler("onclick",this.board_btn_create_onclick,this);
             this.btn_row_add.addEventHandler("onclick",this.btn_row_add_onclick,this);
             this.btn_row_delete.addEventHandler("onclick",this.btn_row_delete_onclick,this);
+            this.btn_board_save.addEventHandler("onclick",this.btn_board_save_onclick,this);
         };
-        this.loadIncludeScript("Form_Board.xfdl");
+        this.loadIncludeScript("Form_Board_copy0.xfdl");
         this.loadPreloadList();
         
         // Remove Reference

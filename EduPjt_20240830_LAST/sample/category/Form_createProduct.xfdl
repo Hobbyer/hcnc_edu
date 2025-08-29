@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_createProduct" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="Div00" taborder="0" text="Div00" left="366" top="23" width="554" height="674" background="lightskyblue">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="카테고리명" left="62" top="69" width="70" height="43" onclick="Div00_Static00_onclick"/>
+              <Static id="Static01" taborder="1" text="상품명" left="62" top="166" width="70" height="30"/>
+              <Static id="Static02" taborder="2" text="재고" left="62" top="250" width="70" height="68"/>
+              <Static id="Static03" taborder="3" text="설명" left="62" top="372" width="70" height="36"/>
+              <Edit id="Edit00" taborder="4" left="164" top="166" width="300" height="40"/>
+              <TextArea id="TextArea00" taborder="5" left="164" top="357" width="300" height="202"/>
+              <Static id="Static04_00" taborder="6" left="164" top="82" width="300" height="31" background="lightgray"/>
+              <Edit id="Edit01_00" taborder="7" left="164" top="257" width="300" height="43"/>
+              <Button id="Button00" taborder="8" text="등록" left="174" top="594" width="100" height="47"/>
+              <Button id="Button01" taborder="9" text="취소" left="328" top="594" width="100" height="47"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[]]></Script>
+  </Form>
+</FDL>

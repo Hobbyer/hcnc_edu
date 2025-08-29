@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_createBoard" width="1280" height="720" titletext="New Form" onload="Form_createBoard_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="div_body" taborder="0" left="186" top="42" width="414" height="458" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="제목" left="34" top="40" width="78" height="34" textAlign="center"/>
+              <Edit id="Edit00" taborder="1" left="134" top="38" width="200" height="38"/>
+              <Edit id="Edit00_00" taborder="2" left="134" top="96" width="200" height="38"/>
+              <Static id="Static00_00" taborder="3" text="작성자" left="34" top="98" width="78" height="34" textAlign="center" onclick="div_body_Static00_00_onclick"/>
+              <Static id="Static00_00_00" taborder="4" text="내용" left="34" top="160" width="78" height="34" textAlign="center"/>
+              <TextArea id="TextArea00" taborder="5" left="136" top="170" width="197" height="192"/>
+              <Button id="btn_board_create" taborder="6" text="등록" left="136" top="383" width="75" height="34" onclick="div_body_btn_board_create_onclick"/>
+              <Button id="btn_create_cancel" taborder="7" text="취소" left="258" top="383" width="75" height="34" onclick="div_body_btn_create_cancel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="new_board">
+        <ColumnInfo>
+          <Column id="BOARD_TITLE" type="STRING" size="256"/>
+          <Column id="BOARD_WRITER" type="STRING" size="256"/>
+          <Column id="BOARD_CONTENT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_response">
+        <ColumnInfo>
+          <Column id="message" type="STRING" size="256"/>
+          <Column id="result_value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.Form_createBoard_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	trace("글쓰기 페이지 로드!");
+};
+
+this.div_body_btn_create_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getOwnerFrame().set_formurl("board::Form_Board.xfdl");
+};
+
+
+this.fn_callback = function(svcId, errCD, errMSG){
+	if(svcId === "createBoard"){
+		var message = this.ds_response.getColumn(0, "message");
+		var resultValue = this.ds_response.getColumn(0, "result_value");
+		
+		if(resultValue === 1){
+			this.alert(message);
+			this.close();
+		} else {
+			this.alert(message);
+		}
+	}
+}
+
+
+this.div_body_btn_board_create_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 1. 필드 변수 선언
+	var strSvcId    = "createBoard";      // 서비스 ID
+	var strSvcUrl   = "svc::createBoard.do";      // 호출 URL
+	var inData      = "new_board=new_board";      // 입력 Dataset (ex: "ds_input=ds_input")
+	var outData     = "ds_response=ds_response";      // 출력 Dataset (ex: "ds_output=ds_output")
+	var strArg      = "";      // 전달 변수 (ex: "param1=value param2=value")
+	var callBackFnc = "fn_callback";      // 콜백 함수명
+	var bAsync		= true;   // (옵션) bAsync
+
+	// 2. transaction 호출
+	this.transaction(
+		strSvcId,
+		strSvcUrl,
+		inData,
+		outData,
+		strArg,
+		callBackFnc,
+		bAsync
+	);
+	
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="div_body.form.Edit00" propid="value" datasetid="new_board" columnid="BOARD_TITLE"/>
+      <BindItem id="item1" compid="div_body.form.Edit00_00" propid="value" datasetid="new_board" columnid="BOARD_WRITER"/>
+      <BindItem id="item2" compid="div_body.form.TextArea00" propid="value" datasetid="new_board" columnid="BOARD_CONTENT"/>
+    </Bind>
+  </Form>
+</FDL>

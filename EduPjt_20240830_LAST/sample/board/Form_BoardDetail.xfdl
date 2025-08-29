@@ -4,13 +4,15 @@
     <Layouts>
       <Layout height="720" width="1280">
         <Static id="b_detail_st_title" taborder="0" text="제목" left="74" top="52" width="74" height="30"/>
-        <Edit id="b_detail_ed_title" taborder="1" left="144" top="54" width="316" height="26"/>
+        <Edit id="b_detail_ed_title" taborder="1" left="144" top="54" width="316" height="26" onchanged="b_detail_ed_title_onchanged"/>
         <Static id="b_detail_st_writer" taborder="2" text="작성자" left="74" top="94" width="74" height="30"/>
-        <Edit id="b_detail_ed_title00" taborder="3" left="144" top="96" width="316" height="26"/>
-        <Static id="b_detail_st_content" taborder="4" text="내용" left="73" top="140" width="74" height="30"/>
-        <TextArea id="b_detail_ed_content" taborder="5" left="144" top="140" width="314" height="208"/>
-        <Button id="b_detail_btn_delete" taborder="6" text="삭제" left="320" top="370" width="138" height="58"/>
-        <Button id="b_detail_btn_update" taborder="7" text="수정" left="144" top="370" width="138" height="58"/>
+        <Static id="b_detail_st_content" taborder="3" text="내용" left="73" top="140" width="74" height="30"/>
+        <TextArea id="b_detail_ed_content" taborder="4" left="144" top="140" width="314" height="208"/>
+        <Button id="b_detail_btn_delete" taborder="5" text="삭제" left="320" top="370" width="138" height="58"/>
+        <Button id="b_detail_btn_update" taborder="6" text="수정" left="144" top="370" width="138" height="58" onclick="b_detail_btn_update_onclick"/>
+        <Static id="Static00" taborder="7" left="144" top="96" width="316" height="26"/>
+        <Static id="get_b_writer_st" taborder="8" left="144" top="12" width="316" height="26" onclick="Static_onclick"/>
+        <Static id="b_detail_st_regDate" taborder="9" text="작성일자" left="74" top="10" width="74" height="30" onclick="Static_onclick"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
@@ -26,6 +28,48 @@ this.Form_BoardDetail_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo
 	var strSvcUrl   = "svc::getBoard.do";      // 호출 URL
 	var inData      = "ds_search=ds_search";      // 입력 Dataset (ex: "ds_input=ds_input")
 	var outData     = "ds_board=ds_board";      // 출력 Dataset (ex: "ds_output=ds_output")
+	var strArg      = "";      // 전달 변수 (ex: "param1=value param2=value")
+	var callBackFnc = "fn_callback";      // 콜백 함수명
+	var bAsync		= true;   // (옵션) bAsync
+
+	// 2. transaction 호출
+	this.transaction(
+		strSvcId,
+		strSvcUrl,
+		inData,
+		outData,
+		strArg,
+		callBackFnc,
+		bAsync
+	);
+};
+
+this.fn_callback = function(svcId, errCd, errMsg){
+	if(svcId === "updateBoard"){
+		if(errCd === -1){
+			this.alert(errMsg)
+		} else {
+			var message = this.ds_response.getColumn(0, "message");
+			var resultValue = this.ds_response.getColumn(0, "result_value");
+			
+			alert(message);
+			
+			if(resultValue === 1){
+				this.close();
+			}
+			
+			this.ds_response.clearData();
+		}
+	}
+}
+
+this.b_detail_btn_update_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 1. 필드 변수 선언
+	var strSvcId    = "updateBoard";      // 서비스 ID
+	var strSvcUrl   = "svc::updateBoard.do";      // 호출 URL
+	var inData      = "ds_board=ds_board";      // 입력 Dataset (ex: "ds_input=ds_input")
+	var outData     = "ds_response=ds_response";      // 출력 Dataset (ex: "ds_output=ds_output")
 	var strArg      = "";      // 전달 변수 (ex: "param1=value param2=value")
 	var callBackFnc = "fn_callback";      // 콜백 함수명
 	var bAsync		= true;   // (옵션) bAsync
@@ -63,11 +107,21 @@ this.Form_BoardDetail_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo
           <Row/>
         </Rows>
       </Dataset>
+      <Dataset id="ds_response">
+        <ColumnInfo>
+          <Column id="message" type="STRING" size="256"/>
+          <Column id="result_value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
     </Objects>
     <Bind>
-      <BindItem id="item0" compid="b_detail_ed_title" propid="value" datasetid="ds_list" columnid="BOARD_TITLE"/>
-      <BindItem id="item1" compid="b_detail_ed_title00" propid="value" datasetid="ds_list" columnid="BOARD_WRITER"/>
-      <BindItem id="item2" compid="b_detail_ed_content" propid="value" datasetid="ds_list" columnid="BOARD_CONTENT"/>
+      <BindItem id="item0" compid="b_detail_ed_title" propid="value" datasetid="ds_board" columnid="BOARD_TITLE"/>
+      <BindItem id="item2" compid="b_detail_ed_content" propid="value" datasetid="ds_board" columnid="BOARD_CONTENT"/>
+      <BindItem id="item1" compid="Static00" propid="text" datasetid="ds_board" columnid="BOARD_WRITER"/>
+      <BindItem id="item3" compid="get_b_writer_st" propid="text" datasetid="ds_board" columnid="REG_DATE"/>
     </Bind>
   </Form>
 </FDL>

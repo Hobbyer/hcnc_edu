@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="Form_Board" width="1280" height="720" titletext="New Form" onload="Form_Board_onload">
+  <Form id="Form_Board" width="1280" height="720" titletext="New Form" onload="Form_Board_onload" onsetfocus="Form_Board_onload">
     <Layouts>
       <Layout height="720" width="1280">
         <Static id="board_st_static" taborder="0" text="게시판입니다" left="74" top="28" width="338" height="52" font="bold 18px/normal &quot;Gulim&quot;"/>
-        <Grid id="Grid00" taborder="1" left="70" top="194" width="90.63%" height="326" binddataset="ds_list" oncellclick="Grid00_oncellclick">
+        <Grid id="Grid00" taborder="1" left="74" top="200" width="90.63%" height="326" binddataset="ds_list" oncelldblclick="Grid00_oncelldblclick" oncellclick="Grid00_oncellclick">
           <Formats>
             <Format id="default">
               <Columns>
                 <Column size="150"/>
                 <Column size="150"/>
                 <Column size="150"/>
+                <Column size="195"/>
                 <Column size="150"/>
               </Columns>
               <Rows>
@@ -21,13 +22,15 @@
                 <Cell text="No"/>
                 <Cell col="1" text="제목"/>
                 <Cell col="2" text="작성자"/>
-                <Cell col="3" text="작성일자"/>
+                <Cell col="3" text="내용"/>
+                <Cell col="4" text="작성일자"/>
               </Band>
               <Band id="body">
-                <Cell text="expr:currow + 1"/>
-                <Cell col="1" text="bind:BOARD_TITLE"/>
-                <Cell col="2" text="bind:BOARD_WRITER"/>
-                <Cell col="3" text="bind:REG_DATE"/>
+                <Cell text="expr:currow + 1" edittype="normal"/>
+                <Cell col="1" text="bind:BOARD_TITLE" edittype="normal"/>
+                <Cell col="2" text="bind:BOARD_WRITER" edittype="normal"/>
+                <Cell col="3" edittype="normal" text="bind:BOARD_CONTENT"/>
+                <Cell col="4" text="bind:REG_DATE" edittype="date"/>
               </Band>
             </Format>
           </Formats>
@@ -48,6 +51,10 @@
           </Layouts>
           <InitValue/>
         </Div>
+        <Button id="board_btn_create" taborder="3" text="글쓰기" left="1370" top="41" width="135" height="49" onclick="board_btn_create_onclick"/>
+        <Button id="btn_row_add" taborder="4" text="행 추가" left="988" top="45" width="112" height="39" onclick="btn_row_add_onclick"/>
+        <Button id="btn_row_delete" taborder="5" text="행 삭제" left="1120" top="45" width="112" height="39" onclick="btn_row_delete_onclick"/>
+        <Button id="btn_board_save" taborder="6" text="저장" left="872" top="45" width="98" height="40" onclick="btn_board_save_onclick"/>
       </Layout>
     </Layouts>
     <Objects>
@@ -70,6 +77,29 @@
           <Column id="BOARD_CONTENT" type="STRING" size="256"/>
           <Column id="REG_DATE" type="STRING" size="256"/>
         </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_randomBox">
+        <ColumnInfo>
+          <Column id="BOARD_TITLE" type="STRING" size="256"/>
+          <Column id="BOARD_WRITER" type="STRING" size="256"/>
+          <Column id="BOARD_CONTENT" type="STRING" size="256"/>
+          <Column id="BOARD_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_response">
+        <ColumnInfo>
+          <Column id="message" type="STRING" size="256"/>
+          <Column id="result_value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
       </Dataset>
     </Objects>
     <Script type="xscript5.1"><![CDATA[
@@ -123,23 +153,8 @@ this.fn_callback = function(svcId, errCD, errMSG){
 
 this.Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
 {	
-	var boardIdx = this.ds_list.getColumn(e.row, "BOARD_CODE");
-	
-	var boardIdx2 = this.ds_list.getColumn(this.ds_list.rowposition, "BOARD_CODE");
-	
-	popup = new nexacro.ChildFrame;
-	
-	var surl = "board::Form_BoardDetail.xfdl";
-	
-	var param = {
-		boardIdx : boardIdx
-	};
-	
-	popup.init("updatePop", 0, 0, 800, 700, null, null, surl);
-	popup.set_dragmovetype("all");
-	popup.set_showtitlebar("상세보기");
-	popup.showModal(this.getOwnerFrame(), param, this, "fn_popCallback", true);
-	
+	var row = this.Grid00.getSelectedRows();
+
 };
 
 
@@ -166,7 +181,85 @@ this.Div00_board_btn_search_onclick = function(obj:nexacro.Button,e:nexacro.Clic
 		bAsync
 	);
 };
-]]></Script>
+
+this.board_btn_create_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getOwnerFrame().set_formurl("board::Form_createBoard.xfdl");
+};
+
+// this.Grid00_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+// {
+// 	var boardIdx = this.ds_list.getColumn(e.row, "BOARD_CODE");
+// 	
+// 	var boardIdx2 = this.ds_list.getColumn(this.ds_list.rowposition, "BOARD_CODE");
+// 
+// 	
+// 	popup = new nexacro.ChildFrame;
+// 	
+// 	if(boardIdx != null && boardIdx != '' && boardIdx != undefined){
+// 	
+// 		var surl = "board::Form_BoardDetail.xfdl";
+// 		
+// 		var param = {
+// 			boardIdx : boardIdx
+// 		};
+// 	} else {
+// 		var surl = "board::Form_createBoard.xfdl";
+// 		
+// 		var param = {};
+// 	}
+// 	
+// 	popup.init("updatePop", 0, 0, 800, 700, null, null, surl);
+// 	popup.set_dragmovetype("all");
+// 	popup.set_showtitlebar("상세보기");
+// 	popup.showModal(this.getOwnerFrame(), param, this, "fn_popCallback", true);
+// };
+
+this.btn_row_add_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var row = this.ds_list.addRow();
+	
+// 	this.ds_list.addColumn("ROW_TYPE", String());
+// 	this.ds_list.setColumn(row, "ROW_TYPE", "I");
+};
+
+this.btn_row_delete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var row = this.Grid00.getSelectedRows();
+	
+	
+// 	this.ds_list.addColumn("ROW_TYPE", String());
+// 	this.ds_list.setColumn(row, "ROW_TYPE", "D");
+	
+	this.ds_list.deleteRow(row);
+};
+
+
+this.btn_board_save_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	
+	
+	// 1. 필드 변수 선언
+	var strSvcId    = "boardCU";      // 서비스 ID
+	var strSvcUrl   = "svc::boardCU.do";      // 호출 URL
+	var inData      = "ds_list=ds_list:U";      // 입력 Dataset (ex: "ds_input=ds_input")
+	var outData     = "ds_response=ds_response";      // 출력 Dataset (ex: "ds_output=ds_output")
+	var strArg      = "";      // 전달 변수 (ex: "param1=value param2=value")
+	var callBackFnc = "fn_callback";      // 콜백 함수명
+	var bAsync		= true;   // (옵션) bAsync
+
+	// 2. transaction 호출
+	this.transaction(
+		strSvcId,
+		strSvcUrl,
+		inData,
+		outData,
+		strArg,
+		callBackFnc,
+		bAsync
+	);
+};]]></Script>
     <Bind>
       <BindItem id="item0" compid="Div00.form.board_search_ed_title" propid="value" datasetid="ds_search" columnid="BOARD_TITLE"/>
       <BindItem id="item1" compid="Div00.form.board_search_ed_writer" propid="value" datasetid="ds_search" columnid="BOARD_WRITER"/>

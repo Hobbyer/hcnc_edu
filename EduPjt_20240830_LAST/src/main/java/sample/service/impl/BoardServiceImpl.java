@@ -35,4 +35,25 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardMapper.getBoard(param);
 	}
+
+
+	@Override
+	public int createBoard(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return boardMapper.createBoard(param);
+	}
+
+
+	@Override
+	public int updateBoard(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return boardMapper.updateBoard(param);
+	}
+
+
+	@Override
+	public int deleteBoard(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.deleteBoard(map);
+	}
 }

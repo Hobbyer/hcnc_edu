@@ -12,4 +12,10 @@ public interface BoardService {
 
 	HashMap<String, Object> getBoard(Map<String, Object> param);
 	
+	int createBoard(Map<String, Object> param);
+
+	int updateBoard(Map<String, Object> param);
+
+	int deleteBoard(Map<String, Object> map);
+	
 }

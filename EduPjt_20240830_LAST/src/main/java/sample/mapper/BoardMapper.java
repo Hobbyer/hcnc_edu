@@ -14,5 +14,11 @@ public interface BoardMapper {
 	List<HashMap<String, Object>> searchBoardList(Map<String, Object> param);
 
 	HashMap<String, Object> getBoard(Map<String, Object> param);
+
+	int createBoard(Map<String, Object> param);
+
+	int updateBoard(Map<String, Object> param);
+
+	int deleteBoard(Map<String, Object> map);
 	
 }
