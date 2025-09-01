@@ -28,7 +28,7 @@
 
 
             obj = new Dataset("ds_comboBox", this);
-            obj._setContents("<ColumnInfo><Column id=\"CATE_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"CATE_NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CATE_NAME\">- 전체 -</Col><Col id=\"CATE_CODE\"> - 전체 -</Col></Row></Rows>");
+            obj._setContents("<ColumnInfo><Column id=\"CATE_CODE\" type=\"STRING\" size=\"256\"/><Column id=\"CATE_NAME\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
             this.addChild(obj.name, obj);
             
             // UI Components Initialize
@@ -113,9 +113,20 @@
         	this.search_categoryAndProduct();
         };
 
-        this.fn_callback = function()
+        this.fn_callback = function(svcId, errCd, errMsg)
         {
+        	switch(svcId) {
+        	case "readCategoryAndProduct":
 
+        		var row = this.ds_comboBox.insertRow(0);
+        		this.ds_comboBox.setColumn(row, "CATE_CODE", "- 전체 -");
+        		this.ds_comboBox.setColumn(row, "CATE_NAME", "-전체-");
+
+        		this.Div00.form.cb_pd_cateCode.set_value("- 전체 -");
+
+        		break;
+        	default:
+        	}
         };
 
         this.search_categoryAndProduct = function()

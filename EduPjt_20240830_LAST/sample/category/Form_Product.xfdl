@@ -90,10 +90,7 @@
           <Column id="CATE_NAME" type="STRING" size="256"/>
         </ColumnInfo>
         <Rows>
-          <Row>
-            <Col id="CATE_NAME">- 전체 -</Col>
-            <Col id="CATE_CODE"> - 전체 -</Col>
-          </Row>
+          <Row/>
         </Rows>
       </Dataset>
     </Objects>
@@ -103,9 +100,20 @@ this.Form_Product_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 	this.search_categoryAndProduct();
 };
 
-this.fn_callback = function()
+this.fn_callback = function(svcId, errCd, errMsg)
 {
-
+	switch(svcId) {
+	case "readCategoryAndProduct":
+		
+		var row = this.ds_comboBox.insertRow(0);
+		this.ds_comboBox.setColumn(row, "CATE_CODE", "- 전체 -");
+		this.ds_comboBox.setColumn(row, "CATE_NAME", "-전체-");
+		
+		this.Div00.form.cb_pd_cateCode.set_value("- 전체 -");
+		
+		break;
+	default:
+	}
 };
 
 this.search_categoryAndProduct = function()

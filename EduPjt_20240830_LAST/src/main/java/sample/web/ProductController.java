@@ -68,7 +68,7 @@ public class ProductController {
 			resultData.put("message", "저장 실패!");
 		}
 		
-		resultData.put("result_value", resultData);
+		resultData.put("result_value", saveResult);
 		
 		result.addDataSet("ds_response", resultData);
 		

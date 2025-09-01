@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sample.mapper.DeptMapper">
+	
+	<select id="readDept" resultType="java.util.HashMap">
+		SELECT dept_cd, dept_nm, DATE_FORMAT(reg_dt, "%Y-%m-%d") AS reg_dt
+			FROM DEPT
+	</select>
+	
+	<select id="readSubDept" resultType="java.util.HashMap">
+		SELECT dept_sub_cd, dept_sub_nm, dept_cd, DATE_FORMAT(reg_dt, "%Y-%m-%d") AS reg_dt
+			FROM DEPT_SUB
+	</select>
+	
+	<select id="readUsers" resultType="java.util.HashMap">
+		SELECT 
+		    U.USER_ID,
+		    U.NAME,
+		    U.MAIL,
+		    U.ADDRESS,
+		    U.dept_cd AS dept_cd,
+		    U.dept_sub_cd AS dept_sub_cd,
+		    D.dept_nm AS dept_nm,
+		    S.dept_sub_nm AS dept_sub_nm
+		FROM USERS U
+		INNER JOIN DEPT D
+		    ON U.dept_cd = D.dept_cd
+		INNER JOIN DEPT_SUB S
+		    ON U.dept_cd = S.dept_cd
+		   AND U.dept_sub_cd = S.dept_sub_cd
+	</select>
+	
+</mapper>

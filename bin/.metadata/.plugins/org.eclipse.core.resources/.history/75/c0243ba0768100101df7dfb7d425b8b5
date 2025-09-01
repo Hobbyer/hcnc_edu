@@ -1,0 +1,42 @@
+
+package sample.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
+
+@Mapper("loginMapper")
+public interface LoginMapper {
+	//사용자 유무
+	int selectUserCnt(Map<String, Object> ds_param);
+	//사용자 조회
+	Map<String, Object> selectUser(Map<String, Object> ds_param);
+	//사용자 등록
+	void insertUser(Map<String, Object> param);
+	//전체 회원 조회
+	List<Map<String, Object>> selectUsers(Map<String, Object> ds_param);
+
+	void saveCodeMst(Map<String, Object> param);
+
+	void deleteCodeMst(Map<String, Object> param);
+	
+	int checkCodeMst(Map<String, Object> param);
+	
+	void insertCodeMst(Map<String, Object> param);
+	
+	void updateCodeMst(Map<String, Object> param);
+
+	List<Map<String, Object>> selectCodeDtl(Map<String, Object> param);
+
+	void saveCodeDtl(Map<String, Object> param);
+
+	void deleteCodeDtl(Map<String, Object> param);
+
+	int checkCodeDtl(Map<String, Object> param);
+	
+	void insertCodeDtl(Map<String, Object> param);
+	
+	void updateCodeDtl(Map<String, Object> param);
+
+}

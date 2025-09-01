@@ -154,6 +154,8 @@
         		var message = this.ds_response.getColumn(0, "message")
         		var result_value = this.ds_response.getColumn(0, "result_value");
 
+        		trace(result_value);
+
         		if(result_value === 1){
         			this.alert(message);
         			this.close();

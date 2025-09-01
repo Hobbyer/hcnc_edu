@@ -1,0 +1,93 @@
+package sample.web;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
+import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
+import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
+
+import exception.ServiceException;
+import sample.service.LoginService;
+
+@Controller
+public class LoginController {
+  private Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
+    @Resource(name = "loginService")
+    private LoginService service;
+
+    //로그인화면
+    @RequestMapping(value = "/EduPjt_20240830_LAST/selectUser.do")
+    public NexacroResult selectUser(@ParamDataSet(name = "ds_user", required = false) Map<String,Object> ds_param) {
+    	NexacroResult result = new NexacroResult();
+    	Map<String, Object> selectUser = new HashMap<>();							//바깥에 선언
+    	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>11>>>>");
+    	try {
+    		int cnt = service.selectUserCnt(ds_param);								//사용자 cnt 후
+    		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    		System.out.println(cnt);
+    		if(cnt != 0) {															//사용자가 존재하면
+    			selectUser = service.selectUser(ds_param);							//사용자 정보 조회
+        	}else {
+        	    result.setErrorCode(-2);
+        	    result.setErrorMsg("사용자정보가 없습니다. 회원가입을 진행해주세요.");
+        	}
+    		result.addDataSet("ds_login", selectUser);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+    
+    //회원가입화면
+    @RequestMapping(value = "/EduPjt_20240830_LAST/insertUser.do")
+    public NexacroResult insertUser(@ParamDataSet(name = "ds_sign", required = false) Map<String,Object> ds_param) {
+    	NexacroResult result = new NexacroResult();    
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(ds_param.get("hire_dt"));	
+    	try {
+    		service.insertUser(ds_param);
+    	}catch(ServiceException e) {
+            result.setErrorCode(-3); 			// 중복 사용자 코드
+            result.setErrorMsg(e.getMessage()); // "이미 존재하는 사용자입니다."
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+
+    //로그인화면
+    @RequestMapping(value = "/EduPjt_20240830_LAST/selectUsers.do")
+    public NexacroResult selectUsers(@ParamDataSet(name = "ds_search", required = false) Map<String,Object> ds_param) {
+    	NexacroResult result = new NexacroResult();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(ds_param.get("nm"));
+		System.out.println(ds_param.get("dt"));
+		System.out.println(ds_param.get("ds_sub"));
+		System.out.println(ds_param.get("jw"));
+    	
+    	try {
+    		List<Map<String, Object>> selectUsers = service.selectUsers(ds_param);							//사용자 정보 조회
+			
+    		result.addDataSet("ds_users", selectUsers);
+    	}catch(Exception ee) {
+    		System.out.println(ee);
+    		result.setErrorCode(-1);
+    		result.setErrorMsg("catch 조회 오류");
+    	}
+    	return result;
+    }
+}
