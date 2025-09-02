@@ -104,6 +104,7 @@
         		} else {
         			trace(errMsg);
         		}
+
         		break;
 
         	default:

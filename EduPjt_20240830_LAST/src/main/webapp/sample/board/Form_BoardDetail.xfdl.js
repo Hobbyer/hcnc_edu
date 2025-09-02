@@ -77,6 +77,11 @@
             obj.set_taborder("9");
             obj.set_text("작성일자");
             this.addChild(obj.name, obj);
+
+            obj = new Button("Button00","150","464","308","40",null,null,null,null,null,null,this);
+            obj.set_taborder("10");
+            obj.set_text("부모한테 데이터 던지기");
+            this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this
             obj = new Layout("default","",1280,720,this,function(p){});
@@ -181,6 +186,15 @@
         	);
         };
 
+        this.Button00_onclick = function(obj,e)
+        {
+        	var arr = new Array();
+
+        	arr[0] = "팝업창데이터임";
+
+        	this.close("ok:::" + arr);
+        };
+
         });
         
         // Regist UI Components Event
@@ -191,6 +205,7 @@
             this.b_detail_btn_update.addEventHandler("onclick",this.b_detail_btn_update_onclick,this);
             this.get_b_writer_st.addEventHandler("onclick",this.Static_onclick,this);
             this.b_detail_st_regDate.addEventHandler("onclick",this.Static_onclick,this);
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
         };
         this.loadIncludeScript("Form_BoardDetail.xfdl");
         this.loadPreloadList();

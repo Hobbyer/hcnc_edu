@@ -13,6 +13,7 @@
         <Static id="Static00" taborder="7" left="144" top="96" width="316" height="26"/>
         <Static id="get_b_writer_st" taborder="8" left="144" top="12" width="316" height="26" onclick="Static_onclick"/>
         <Static id="b_detail_st_regDate" taborder="9" text="작성일자" left="74" top="10" width="74" height="30" onclick="Static_onclick"/>
+        <Button id="Button00" taborder="10" text="부모한테 데이터 던지기" left="150" top="464" width="308" height="40" onclick="Button00_onclick"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
@@ -84,6 +85,15 @@ this.b_detail_btn_update_onclick = function(obj:nexacro.Button,e:nexacro.ClickEv
 		callBackFnc,
 		bAsync
 	);
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arr = new Array();
+	
+	arr[0] = "팝업창데이터임";
+	
+	this.close("ok:::" + arr);
 };
 ]]></Script>
     <Objects>

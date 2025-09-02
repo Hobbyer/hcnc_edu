@@ -114,7 +114,8 @@ this.fn_callback = function(svcId, errCd, errMsg)
 		} else {
 			trace(errMsg);
 		}
-		break;
+		
+		break; 
 
 	default:
 	}

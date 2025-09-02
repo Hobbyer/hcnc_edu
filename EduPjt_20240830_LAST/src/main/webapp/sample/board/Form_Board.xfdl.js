@@ -36,6 +36,7 @@
             obj = new Grid("Grid00","74","200","90.63%","326",null,null,null,null,null,null,this);
             obj.set_taborder("1");
             obj.set_binddataset("ds_list");
+            obj.set_autofittype("col");
             obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"150\"/><Column size=\"150\"/><Column size=\"150\"/><Column size=\"150\"/></Columns><Rows><Row size=\"40\" band=\"head\"/><Row size=\"40\"/></Rows><Band id=\"head\"><Cell text=\"No\"/><Cell col=\"1\" text=\"제목\"/><Cell col=\"2\" text=\"작성자\"/><Cell col=\"3\" text=\"작성일자\"/></Band><Band id=\"body\"><Cell text=\"expr:currow + 1\"/><Cell col=\"1\" text=\"bind:BOARD_TITLE\"/><Cell col=\"2\" text=\"bind:BOARD_WRITER\"/><Cell col=\"3\" text=\"bind:REG_DATE\"/></Band></Format></Formats>");
             this.addChild(obj.name, obj);
 
@@ -102,6 +103,11 @@
             obj = new Button("btn_row_delete","1120","45","112","39",null,null,null,null,null,null,this);
             obj.set_taborder("5");
             obj.set_text("행 삭제");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00","74","576","195","69",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text("Button00");
             this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this
@@ -256,8 +262,25 @@
 
         this.btn_row_delete_onclick = function(obj,e)
         {
-        	this.ds_list.deleteRow(this.Grid00.getSelectedRows());
+
         };
+
+        this.fn_popCallback = function(svcId, strVal)
+        {
+        	switch(svcId) {
+        		case "updatePop":
+
+        			if(String(strVal).indexOf("ok:::") > -1){
+        				var rtnArr = String(strVal).replace("ok:::", "").split(",");
+
+        				trace(rtnArr[0]);
+        			}
+
+        		break;
+
+        	default:
+        	}
+        }
 
         });
         

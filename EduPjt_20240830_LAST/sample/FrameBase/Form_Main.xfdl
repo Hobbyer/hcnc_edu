@@ -6,7 +6,7 @@
         <Static id="st_id" taborder="0" text="아이디" left="100" top="61" width="110" height="69" textAlign="center" background="red" border="1px solid black" onclick="Static00_onclick" color="#ffffff" font="bold 14px/normal &quot;Gulim&quot;"/>
         <Static id="st_pw" taborder="1" text="비밀번호" left="100" top="161" width="110" height="69" background="red" border="1px solid black" onclick="Static00_00_onclick" textAlign="center" color="#ffffff" font="bold 16px/normal &quot;Gulim&quot;"/>
         <Edit id="ed_id" taborder="2" left="230" top="75" width="222" height="41" onchanged="ed_id_onchanged"/>
-        <Edit id="ed_pw" taborder="3" left="230" top="174" width="224" height="36"/>
+        <Edit id="ed_pw" taborder="3" left="230" top="172" width="224" height="36" password="true"/>
         <Button id="btn_login" taborder="4" text="로그인" left="476" top="112" width="157" height="56" textAlign="center" onclick="Button00_onclick" font="bold 14pt/normal &quot;Arial&quot;"/>
       </Layout>
     </Layouts>
@@ -47,7 +47,11 @@ this.fn_callBack = function(svcID, errCD, errMSG){
 				
 				this.ds_login.clear();
 				
-				this.getOwnerFrame().set_formurl("board::Form_Board.xfdl");
+				var objApp = nexacro.getApplication();
+				objApp.mainframe.VFrameSet00.TopFrame.set_visible(true);
+				objApp.mainframe.VFrameSet00.HFrameSet00.LeftFrame.set_visible(true);
+				objApp.mainframe.VFrameSet00.HFrameSet00.WorkFrame.set_formurl("board::Form_Board.xfdl");
+				
 			} else {
 				alert("아이디 또는 비밀번호가 틀렸습니다.");
 				
