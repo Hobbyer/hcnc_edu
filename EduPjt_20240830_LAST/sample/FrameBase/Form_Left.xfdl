@@ -3,7 +3,21 @@
   <Form id="Form_Left" width="150" height="600" titletext="New Form" onload="Form_Left_onload">
     <Layouts>
       <Layout height="600" width="150">
-        <Grid id="gridLeftMenu" taborder="0" left="0" top="50" right="0" bottom="0" oncellclick="gridLeftMenu_oncellclick"/>
+        <Grid id="gridLeftMenu" taborder="0" left="0" top="0" right="0" bottom="0" oncellclick="gridLeftMenu_oncellclick" binddataset="ds_left" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="146"/>
+              </Columns>
+              <Rows>
+                <Row size="24"/>
+              </Rows>
+              <Band id="body">
+                <Cell text="bind:MENU_NM" edittype="tree" displaytype="treeitemcontrol" treestartlevel="1" treelevel="bind:MENU_LEVEL"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
       </Layout>
     </Layouts>
     <Objects>
@@ -19,7 +33,7 @@
     <Script type="xscript5.1"><![CDATA[
 this.Form_Left_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
-	this.fn_get_left_menu();
+	//this.fn_get_left_menu(sMenuId);
 };
 
 this.fn_get_left_menu = function(sMenuId)
@@ -39,7 +53,6 @@ this.fn_get_left_menu = function(sMenuId)
 };
 
 
-
 this.gridLeftMenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
 {
 	// 전역데이터셋 gdsOpenMenu 가져오기
@@ -48,7 +61,7 @@ this.gridLeftMenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEve
 	
 	// 그리드에 바인딩된 데이터셋으로 가져오기
 	var objDsMenu = obj.getBindDataset();
-	var sMenuId = objDsOpenMenu.getColumn(e.row, "MENU_ID");
+	var sMenuId = objDsMenu.getColumn(e.row, "MENU_ID");
 	
 	if(sMenuId.length == 4){
 		var RowTree = this.gridLeftMenu.getTreeRow(e.row);
@@ -70,7 +83,7 @@ this.gridLeftMenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEve
 	}
 };
 
-this.fn_open_menu = function()
+this.fn_open_menu = function(sMenuId)
 {
 	var objApp = nexacro.getApplication();
 	
@@ -81,7 +94,7 @@ this.fn_open_menu = function()
 	var objDsOpenMenu = objApp.gds_open_menu;
 	
 	// 오픈할 메뉴 정보 가져오기
-	var nFRow = objDsOpenMenu.findRow("MENU_ID", sMenuId);
+	var nFRow     = objDsMenu.findRow("MENU_ID", sMenuId);
 	var sMenuPath = objDsMenu.getColumn(nFRow, "MENU_PATH");
 	
 	objApp.mainframe.VFrameSet00.HFrameSet00.WorkFrame.set_formurl(sMenuPath);

@@ -22,10 +22,7 @@
             this.addChild(obj.name, obj);
             
             // UI Components Initialize
-            obj = new Static("Static00","310","20","222","40",null,null,null,null,null,null,this);
-            obj.set_taborder("0");
-            obj.set_text("탑 메뉴 입니다.");
-            this.addChild(obj.name, obj);
+
             // Layout Functions
             //-- Default Layout : this
             obj = new Layout("default","",1030,90,this,function(p){});
@@ -79,7 +76,7 @@
         	var nLeft = 200;
         	var nTop = 13;
         	var nWidth = 230;
-        	var nHeight = 50;
+        	var nHeight = 35;
 
         	// 버튼사이에 간격 선언
         	var nGap = 0;
@@ -128,11 +125,11 @@
         	LeftFrame.gridLeftMenu.set_visible(true);
 
         	// 버튼 id에서 메뉴 id값을 추출
-        	var arrResultId = obj.id.split('-');
+        	var arrResultId = obj.id.split('_');
         	var sResultId = arrResultId[1];
 
         	// 왼쪽 메뉴 가져오는 함수 호출 - framleft 화면
-        	nexacro.LeftFrame.form.fnGetLeftMenu(sResultId);
+        	nexacro.LeftFrame.form.fn_get_left_menu(sResultId);
 
         };
         });

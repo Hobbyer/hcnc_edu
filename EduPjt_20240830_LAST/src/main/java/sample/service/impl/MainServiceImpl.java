@@ -2,6 +2,7 @@ package sample.service.impl;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class MainServiceImpl implements MainService {
 			String getSalt = (String) getUser.get("SALT");
 			
 			String loginPass = ShaUtil.sha256Encode(userPw, getSalt);
+			
 			HashMap<String, Object> resultMap = new HashMap<String, Object>();
 			if(loginPass.equals(getPass)) {
 				
@@ -75,5 +77,12 @@ public class MainServiceImpl implements MainService {
 		
 		
 		return mainMapper.joinUser(param);
+	}
+
+
+	@Override
+	public List<HashMap<String, Object>> readUsers() {
+		// TODO Auto-generated method stub
+		return mainMapper.readUsers();
 	}
 }

@@ -2,6 +2,7 @@ package sample.web;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,25 @@ public class MainController {
 	
 	@Autowired
 	private MainService mainService;
+	
+	@RequestMapping(value="/readUsers.do")
+	public NexacroResult readUsers() {
+		
+		NexacroResult result = new NexacroResult();
+		
+		try {
+			List<HashMap<String, Object>> usersResult =  mainService.readUsers();
+			
+			result.addDataSet("ds_users", usersResult);
+			
+		} catch(Exception e) {
+			result.setErrorCode(-1);
+			result.setErrorMsg("쿼리 실행중 오류 발생");
+		}
+		
+		
+		return result;
+	}
 	
 	@RequestMapping(value="/selectUser.do")
 	public NexacroResult selectUser(@ParamDataSet(name="ds_user", required = false) Map<String, Object> dsUser, HttpServletRequest request) {

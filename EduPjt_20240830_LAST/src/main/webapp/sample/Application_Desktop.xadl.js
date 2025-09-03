@@ -14,7 +14,7 @@
 
 
             obj = new Dataset("gds_menu", this);
-            obj._setContents("<ColumnInfo><Column id=\"MENU_ID\" type=\"STRING\" size=\"256\"/><Column id=\"MENU_NM\" type=\"STRING\" size=\"256\"/><Column id=\"MENU_LEVEL\" type=\"STRING\" size=\"256\"/><Column id=\"MENU_PATH\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"MENU_ID\">00</Col><Col id=\"MENU_NM\">게시판</Col><Col id=\"MENU_LEVEL\">0</Col><Col id=\"MENU_PATH\">board::Form_Board</Col></Row><Row><Col id=\"MENU_ID\">01</Col><Col id=\"MENU_NM\">관리</Col><Col id=\"MENU_LEVEL\">0</Col></Row><Row><Col id=\"MENU_ID\">0100</Col><Col id=\"MENU_NM\">사용자부서관리</Col><Col id=\"MENU_LEVEL\">1</Col><Col id=\"MENU_PATH\">dept::Form_Dept</Col></Row></Rows>");
+            obj._setContents("<ColumnInfo><Column id=\"MENU_ID\" type=\"STRING\" size=\"256\"/><Column id=\"MENU_NM\" type=\"STRING\" size=\"256\"/><Column id=\"MENU_LEVEL\" type=\"STRING\" size=\"256\"/><Column id=\"MENU_PATH\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"MENU_ID\">0</Col><Col id=\"MENU_NM\">공통</Col><Col id=\"MENU_LEVEL\">0</Col><Col id=\"MENU_PATH\"/></Row><Row><Col id=\"MENU_ID\">01</Col><Col id=\"MENU_NM\">회원관리</Col><Col id=\"MENU_LEVEL\">0</Col></Row><Row><Col id=\"MENU_ID\">0100</Col><Col id=\"MENU_NM\">회원관리</Col><Col id=\"MENU_LEVEL\">1</Col></Row><Row><Col id=\"MENU_ID\">010000</Col><Col id=\"MENU_NM\">회원관리</Col><Col id=\"MENU_LEVEL\">2</Col><Col id=\"MENU_PATH\">user::Form_UserControl.xfdl</Col></Row><Row><Col id=\"MENU_ID\">02</Col><Col id=\"MENU_NM\">상품관리</Col><Col id=\"MENU_LEVEL\">0</Col></Row><Row><Col id=\"MENU_ID\">0200</Col><Col id=\"MENU_NM\">상품관리</Col><Col id=\"MENU_LEVEL\">1</Col></Row><Row><Col id=\"MENU_ID\">020000</Col><Col id=\"MENU_NM\">상품목록조회</Col><Col id=\"MENU_LEVEL\">2</Col><Col id=\"MENU_PATH\">category::Form_Product.xfdl</Col></Row><Row><Col id=\"MENU_ID\">03</Col><Col id=\"MENU_NM\">주문관리</Col><Col id=\"MENU_LEVEL\">0</Col></Row><Row><Col id=\"MENU_ID\">0300</Col><Col id=\"MENU_NM\">주문관리</Col><Col id=\"MENU_LEVEL\">1</Col></Row><Row><Col id=\"MENU_ID\">030000</Col><Col id=\"MENU_LEVEL\">2</Col><Col id=\"MENU_NM\">주문목록조회</Col></Row><Row><Col id=\"MENU_ID\">030001</Col><Col id=\"MENU_NM\">배송관리</Col><Col id=\"MENU_LEVEL\">2</Col></Row><Row><Col id=\"MENU_ID\">030002</Col><Col id=\"MENU_NM\">환불관리</Col><Col id=\"MENU_LEVEL\">2</Col></Row><Row><Col id=\"MENU_ID\">04</Col><Col id=\"MENU_NM\">통계</Col><Col id=\"MENU_LEVEL\">0</Col></Row><Row><Col id=\"MENU_ID\">0400</Col><Col id=\"MENU_NM\">통계</Col><Col id=\"MENU_LEVEL\">1</Col></Row><Row><Col id=\"MENU_ID\">040000</Col><Col id=\"MENU_NM\">상품별통계</Col><Col id=\"MENU_LEVEL\">2</Col></Row><Row><Col id=\"MENU_ID\">040001</Col><Col id=\"MENU_NM\">회원별통계</Col><Col id=\"MENU_LEVEL\">2</Col></Row></Rows>");
             this._addDataset(obj.name, obj);
 
 
@@ -60,31 +60,39 @@
             this.addChild(frame0.name, frame0);
             this.frame=frame0;
 
-            var frame1 = new ChildFrame("TopFrame",null,null,null,null,null,null,"FrameBase::Form_Top.xfdl",frame0);
+            var frame1 = new ChildFrame("TopUserInfo",null,null,null,null,null,null,"user::Form_Top_UserInfo.xfdl",frame0);
             frame1.set_showtitlebar("false");
             frame1.set_showstatusbar("false");
             frame1.set_visible("false");
             frame0.addChild(frame1.name, frame1);
-            frame1.set_formurl("FrameBase::Form_Top.xfdl");
+            frame1.set_formurl("user::Form_Top_UserInfo.xfdl");
 
 
-            var frame2 = new HFrameSet("HFrameSet00",null,null,null,null,null,null,frame0);
-            frame2.set_separatesize("200,*");
+            var frame2 = new ChildFrame("TopFrame",null,null,null,null,null,null,"FrameBase::Form_Top.xfdl",frame0);
+            frame2.set_showtitlebar("false");
+            frame2.set_showstatusbar("false");
+            frame2.set_visible("false");
             frame0.addChild(frame2.name, frame2);
-
-            var frame3 = new ChildFrame("LeftFrame",null,null,null,null,null,null,"FrameBase::Form_Left.xfdl",frame2);
-            frame3.set_showtitlebar("false");
-            frame3.set_showstatusbar("false");
-            frame3.set_visible("false");
-            frame2.addChild(frame3.name, frame3);
-            frame3.set_formurl("FrameBase::Form_Left.xfdl");
+            frame2.set_formurl("FrameBase::Form_Top.xfdl");
 
 
-            var frame4 = new ChildFrame("WorkFrame",null,null,null,null,null,null,"FrameBase::Form_Main.xfdl",frame2);
+            var frame3 = new HFrameSet("HFrameSet00",null,null,null,null,null,null,frame0);
+            frame3.set_separatesize("200,*");
+            frame0.addChild(frame3.name, frame3);
+
+            var frame4 = new ChildFrame("LeftFrame",null,null,null,null,null,null,"FrameBase::Form_Left.xfdl",frame3);
             frame4.set_showtitlebar("false");
             frame4.set_showstatusbar("false");
-            frame2.addChild(frame4.name, frame4);
-            frame4.set_formurl("FrameBase::Form_Main.xfdl");
+            frame4.set_visible("false");
+            frame3.addChild(frame4.name, frame4);
+            frame4.set_formurl("FrameBase::Form_Left.xfdl");
+
+
+            var frame5 = new ChildFrame("WorkFrame",null,null,null,null,null,null,"FrameBase::Form_Main.xfdl",frame3);
+            frame5.set_showtitlebar("false");
+            frame5.set_showstatusbar("false");
+            frame3.addChild(frame5.name, frame5);
+            frame5.set_formurl("FrameBase::Form_Main.xfdl");
         };
         
         this.on_initEvent = function()

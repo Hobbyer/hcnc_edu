@@ -126,9 +126,10 @@
         				this.ds_login.clear();
 
         				var objApp = nexacro.getApplication();
+        				objApp.mainframe.VframeSet00.TopUserInfo.set_visible(true);
         				objApp.mainframe.VFrameSet00.TopFrame.set_visible(true);
         				objApp.mainframe.VFrameSet00.HFrameSet00.LeftFrame.set_visible(true);
-        				objApp.mainframe.VFrameSet00.HFrameSet00.WorkFrame.set_formurl("board::Form_Board.xfdl");
+        				objApp.mainframe.VFrameSet00.HFrameSet00.WorkFrame.set_formurl("Base::Form_Base.xfdl");
 
         			} else {
         				alert("아이디 또는 비밀번호가 틀렸습니다.");

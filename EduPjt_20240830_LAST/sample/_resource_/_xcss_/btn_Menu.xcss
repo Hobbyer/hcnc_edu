@@ -67,7 +67,7 @@
 	cursor: pointer; /* 클릭 가능한 버튼 */
 	font: bold 16px Arial, sans-serif; /* 굵은 16px Arial 폰트 */
 	background: #16408d; /* 연한 하늘색 배경 */
-
+	
 }
 .Button.btnLogin[status=disabled]
 {
@@ -76,7 +76,6 @@
 	cursor: pointer; /* 클릭 가능한 버튼 */
 	font: bold 16px Arial, sans-serif; /* 굵은 16px Arial 폰트 */
 	background: #16408d; /* 연한 하늘색 배경 */
-
 }
 .Button.btnLogin[status=focused]
 {
