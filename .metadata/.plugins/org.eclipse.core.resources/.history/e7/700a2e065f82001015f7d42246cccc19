@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="sample.service.impl.SampleMapper">
-	<select id="welcome" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT CONCAT('입력하신 글자는 ',LENGTH(#{txt}),'자리의 텍스트 입니다.') AS "welcomeText"
-	</select>
-</mapper>

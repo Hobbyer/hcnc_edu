@@ -21,7 +21,7 @@
           <Col id="MENU_ID">0</Col>
           <Col id="MENU_NM">공통</Col>
           <Col id="MENU_LEVEL">0</Col>
-          <Col id="MENU_PATH"></Col>
+          <Col id="MENU_PATH"/>
         </Row>
         <Row>
           <Col id="MENU_ID">01</Col>
@@ -53,7 +53,7 @@
           <Col id="MENU_ID">020000</Col>
           <Col id="MENU_NM">상품목록조회</Col>
           <Col id="MENU_LEVEL">2</Col>
-          <Col id="MENU_PATH">category::Form_Product.xfdl</Col>
+          <Col id="MENU_PATH">product::Form_ProductControl.xfdl</Col>
         </Row>
         <Row>
           <Col id="MENU_ID">03</Col>

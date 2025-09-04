@@ -134,7 +134,6 @@
         
         // User Script
         this.registerScript("Form_UserControl.xfdl", function() {
-
         this.Form_UserControl_onload = function(obj,e)
         {
         	this.read_users();
@@ -245,7 +244,6 @@
         {
         	this.btn_row_delete_onclick();
         };
-
         });
         
         // Regist UI Components Event

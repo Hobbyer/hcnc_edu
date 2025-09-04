@@ -47,6 +47,7 @@
     <Service prefixid="category" type="form" url="./category/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
     <Service prefixid="dept" type="form" url="./dept/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
     <Service prefixid="user" type="form" url="./user/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
+    <Service prefixid="product" type="form" url="./product/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
   </Services>
   <Protocols/>
   <DeviceAdaptors/>
