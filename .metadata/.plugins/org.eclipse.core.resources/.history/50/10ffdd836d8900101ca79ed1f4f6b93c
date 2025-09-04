@@ -75,10 +75,8 @@ public class ProductController {
 		return result;
 	}
 	
-	@RequestMapping(value="/readProducts.do")
+	@RequestMapping(value="/read_products.do")
 	public NexacroResult readProducts() {
-		
-		System.out.println("ㅇㅇ");
 		
 		NexacroResult result = new NexacroResult();
 		

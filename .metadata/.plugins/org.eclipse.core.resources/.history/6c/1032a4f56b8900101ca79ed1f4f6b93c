@@ -1,10 +1,13 @@
-package sample.service;
+package sample.mapper;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface ProductService {
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
+
+@Mapper("ProductMapper")
+public interface ProductMapper {
 
 	List<HashMap<String, Object>> readCategory();
 
@@ -14,6 +17,5 @@ public interface ProductService {
 
 	int saveProduct(Map<String, Object> param);
 
-	List<HashMap<String, Object>> readProducts();
 	
 }

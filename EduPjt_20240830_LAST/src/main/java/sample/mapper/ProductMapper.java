@@ -17,5 +17,7 @@ public interface ProductMapper {
 
 	int saveProduct(Map<String, Object> param);
 
+	List<HashMap<String, Object>> readProducts();
+
 	
 }

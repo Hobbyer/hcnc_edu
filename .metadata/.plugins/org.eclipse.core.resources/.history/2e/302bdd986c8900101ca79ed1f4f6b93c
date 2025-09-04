@@ -78,13 +78,9 @@ public class ProductController {
 	@RequestMapping(value="/readProducts.do")
 	public NexacroResult readProducts() {
 		
-		System.out.println("ㅇㅇ");
-		
 		NexacroResult result = new NexacroResult();
 		
 		List<HashMap<String, Object>> productsList = productService.readProducts();
-		
-		result.addDataSet("ds_products", productsList);
 		
 		return result;
 	}

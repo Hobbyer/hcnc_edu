@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_UserControl" width="1280" height="720" titletext="New Form" onload="Form_UserControl_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Grid id="Grid00" taborder="0" left="0" top="160" right="0" bottom="0" binddataset="ds_products" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="메인카테고리"/>
+                <Cell col="2" text="서브카테고리"/>
+                <Cell col="3" text="재고"/>
+                <Cell col="4" text="상품명"/>
+                <Cell col="5" text="금액"/>
+                <Cell col="6" text="할인여부"/>
+                <Cell col="7" text="할인금액"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:currow + 1"/>
+                <Cell col="1" text="bind:CATE_CODE"/>
+                <Cell col="2" text="bind:SUB_CATE_CODE"/>
+                <Cell col="3" text="bind:STOCK"/>
+                <Cell col="4" text="bind:PROD_NAME"/>
+                <Cell col="5" text="bind:PRICE"/>
+                <Cell col="6" text="bind:DISCOUNT_YN"/>
+                <Cell col="7" text="bind:DISCOUNT_PRICE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn_row_add" taborder="1" text="+" left="1136" top="99" height="37" width="53" onclick="btn_row_add_onclick"/>
+        <Button id="btn_row_delete" taborder="2" text="-" left="1199" top="99" height="37" width="53" onclick="btn_row_delete_onclick"/>
+        <Div id="Div00" taborder="3" left="0" top="0" height="77" background="lightgrey" right="0" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="메인카테고리" left="16" top="18" width="84" height="40"/>
+              <Edit id="ed_userName" taborder="1" left="720" top="20" width="200" height="37"/>
+              <Static id="Static00_00" taborder="2" text="서브카테고리" left="326" top="18" width="87" height="40"/>
+              <Static id="Static00_00_00" taborder="3" text="상품명" left="666" top="18" width="64" height="40"/>
+              <Combo id="cb_level" taborder="4" left="423" top="20" width="200" height="37" innerdataset="ds_sub_category" codecolumn="SUB_CATE_CODE" datacolumn="SUB_CATE_NAME" onitemchanged="Div00_cb_level_onitemchanged"/>
+              <Button id="btn_exel" taborder="5" text="엑셀" left="981" top="18" width="80" height="40" onclick="Div00_btn_exel_onclick"/>
+              <Button id="btn_search" taborder="6" text="조회" left="1081" top="18" width="80" height="40" onclick="Div00_btn_search_onclick"/>
+              <Button id="btn_save" taborder="7" text="저장" left="1181" top="18" width="80" height="40" onclick="Div00_btn_save_onclick"/>
+              <Combo id="cb_level00" taborder="8" left="103" top="20" width="200" height="37" innerdataset="ds_main_category" codecolumn="CATE_CODE" datacolumn="CATE_NAME" onitemchanged="Div00_cb_level_onitemchanged"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_products">
+        <ColumnInfo>
+          <Column id="PROD_CODE" type="STRING" size="256"/>
+          <Column id="CATE_CODE" type="STRING" size="256"/>
+          <Column id="SUB_CATE_CODE" type="STRING" size="256"/>
+          <Column id="STOCK" type="STRING" size="256"/>
+          <Column id="PROD_NAME" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="DISCOUNT_YN" type="STRING" size="256"/>
+          <Column id="DISCOUNT_PRICE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_main_category">
+        <ColumnInfo>
+          <Column id="CATE_CODE" type="STRING" size="256"/>
+          <Column id="CATE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_sub_category">
+        <ColumnInfo>
+          <Column id="SUB_CATE_CODE" type="STRING" size="256"/>
+          <Column id="SUB_CATE_NAME" type="STRING" size="256"/>
+          <Column id="CATE_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_search_product">
+        <ColumnInfo>
+          <Column id="PROD_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.Form_ProductControl_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.read_products();
+};
+
+this.read_products = function()
+{
+	var strSvcID = "readProducts";	  // 트랜잭션 아이디
+	var strUrl = "svc::readProducts.do"; // 컨트롤러에 보내는거
+	var strInDatasets = "";
+	var strOutDatasets = "ds_products=ds_products";
+	var strArg = "";
+	var callBack = "fn_callBack";
+	var inAsync = true;
+
+	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
+};
+
+this.btn_row_add_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="Div00.form.ed_userName" propid="value" datasetid="ds_search_product" columnid="PROD_NAME"/>
+    </Bind>
+  </Form>
+</FDL>
