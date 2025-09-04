@@ -1,0 +1,25 @@
+package sample.service.impl;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import sample.mapper.MainMapper;
+import sample.service.MainService;
+
+@Service
+public class MainServiceImpl implements MainService {
+	
+	@Autowired
+	private MainMapper mainMapper;
+
+	@Override
+	public Map<String, Object> selectUser(Map<String, Object> dsUser){
+		
+		String user_id = (String) dsUser.get("user_id");
+		String user_pw = (String) dsUser.get("user_pw");
+		
+		return mainMapper.selectUser(dsUser);
+	}
+}

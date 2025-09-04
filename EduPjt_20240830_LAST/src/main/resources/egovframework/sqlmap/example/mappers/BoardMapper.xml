@@ -31,5 +31,21 @@
 			WHERE 1=1
 				AND BOARD_CODE = #{BOARD_CODE}
 	</select>
+	
+	<insert id="createBoard" parameterType="java.util.Map">
+		INSERT INTO BOARDS (BOARD_TITLE, BOARD_WRITER, BOARD_CONTENT)
+			VALUES ( #{BOARD_TITLE}, #{BOARD_WRITER}, #{BOARD_CONTENT} )
+	</insert>
+	
+	<update id="updateBoard" parameterType="java.util.Map">
+		UPDATE BOARDS
+			SET BOARD_TITLE = #{BOARD_TITLE}, BOARD_CONTENT = #{BOARD_CONTENT}
+			WHERE BOARD_CODE = #{BOARD_CODE}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="java.util.Map">
+		DELTE FROM BOARDS
+			WHERE BOARD_CODE = #{BOARD_CODE}
+	</delete>
 		
 </mapper>

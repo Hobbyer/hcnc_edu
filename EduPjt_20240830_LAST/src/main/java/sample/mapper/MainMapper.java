@@ -1,6 +1,7 @@
 package sample.mapper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -13,5 +14,8 @@ public interface MainMapper {
 	HashMap<String, Object> idChk(Map<String, Object> param);
 
 	int joinUser(Map<String, Object> param);
+
+	List<HashMap<String, Object>> readUsers();
+	
 	
 }

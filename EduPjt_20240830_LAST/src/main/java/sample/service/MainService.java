@@ -2,6 +2,7 @@ package sample.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface MainService {
@@ -11,5 +12,7 @@ public interface MainService {
 	HashMap<String, Object> idChk(Map<String, Object> param);
 
 	int joinUser(Map<String, Object> param) throws NoSuchAlgorithmException;
+
+	List<HashMap<String, Object>> readUsers();
 
 }

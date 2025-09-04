@@ -51,8 +51,9 @@
             obj.set_taborder("2");
             this.addChild(obj.name, obj);
 
-            obj = new Edit("ed_pw","230","174","224","36",null,null,null,null,null,null,this);
+            obj = new Edit("ed_pw","230","172","224","36",null,null,null,null,null,null,this);
             obj.set_taborder("3");
+            obj.set_password("true");
             this.addChild(obj.name, obj);
 
             obj = new Button("btn_login","476","112","157","56",null,null,null,null,null,null,this);
@@ -124,7 +125,12 @@
 
         				this.ds_login.clear();
 
-        				this.getOwnerFrame().set_formurl("board::Form_Board.xfdl");
+        				var objApp = nexacro.getApplication();
+        				objApp.mainframe.VframeSet00.TopUserInfo.set_visible(true);
+        				objApp.mainframe.VFrameSet00.TopFrame.set_visible(true);
+        				objApp.mainframe.VFrameSet00.HFrameSet00.LeftFrame.set_visible(true);
+        				objApp.mainframe.VFrameSet00.HFrameSet00.WorkFrame.set_formurl("Base::Form_Base.xfdl");
+
         			} else {
         				alert("아이디 또는 비밀번호가 틀렸습니다.");
 

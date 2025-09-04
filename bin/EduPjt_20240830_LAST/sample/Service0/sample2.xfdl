@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample2" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Combo id="Combo00" taborder="0" text="Combo00" left="65" top="50" width="150" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">ID</Col>
+                <Col id="datacolumn">id</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">NAME</Col>
+                <Col id="datacolumn">name</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Edit id="Edit00" taborder="1" left="230" top="50" width="140" height="30"/>
+        <Button id="Button00" taborder="2" text="조회2" left="615" top="50" width="130" height="30" onclick="Button00_onclick"/>
+        <Grid id="Grid00" taborder="3" left="25" top="105" width="763" height="379" binddataset="ds_list">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="106"/>
+                <Column size="133"/>
+                <Column size="201"/>
+                <Column size="126"/>
+                <Column size="97"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="ID"/>
+                <Cell col="1" text="NAME"/>
+                <Cell col="2" text="DESCRIPTION"/>
+                <Cell col="3" text="USE_YN"/>
+                <Cell col="4" text="REG_USER"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ID"/>
+                <Cell col="1" text="bind:NAME"/>
+                <Cell col="2" text="bind:DESCRIPTION"/>
+                <Cell col="3" text="bind:USE_YN"/>
+                <Cell col="4" text="bind:REG_USER"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[//조회버튼 클릭시
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+  this.fnSearch();
+};
+
+//처리콜백 함수
+this.fnCallback = function(svcID,errorCode,errorMsg)
+{
+  // 에러 시 화면 처리 내역
+  if(errorCode != 0)
+  {
+    this.alert(errorCode+"\n"+errorMsg);
+    return;
+  }
+
+  switch(svcID)
+  {
+    case "search":
+      if(this.ds_list.rowcount < 1){
+        this.alert("조회된 결과가 없습니다.");
+      }
+
+      break;
+  }
+};
+
+//데이터 조회 트랜잭션
+this.fnSearch = function ()
+{
+alert("sss");
+  // 조회조건 셋팅
+  this.ds_search.setColumn(0, "searchType", this.Combo00.value);
+  this.ds_search.setColumn(0, "keyword"  , this.Edit00.text);
+
+  var strSvcId    = "search";
+  var strSvcUrl   = "svc::selectSampleList.do";
+  var inData      = "input1=ds_search";
+  var outData     = "ds_list=output1";
+  var strArg      = "";
+  var callBackFnc = "fnCallback";
+  var isAsync     = true;
+
+  this.transaction(strSvcId ,     // transaction을 구분하기 위한 svc id값
+            strSvcUrl ,   // trabsaction을 요청할 주소
+            inData ,     // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+            outData ,     // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+            strArg,     // 입력값으로 보낼 arguments, a=b
+            callBackFnc,   // transaction의 결과를 받을 Function 이름
+            isAsync);     // 비동기통신 여부 [생략가능]
+};]]></Script>
+  </Form>
+</FDL>
