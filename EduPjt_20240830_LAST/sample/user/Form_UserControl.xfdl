@@ -26,7 +26,7 @@
                 <Cell col="3" text="주소"/>
                 <Cell col="4" text="등급"/>
                 <Cell col="5" text="포인트"/>
-                <Cell col="6" text="회원유무"/>
+                <Cell col="6" text="휴면유무"/>
               </Band>
               <Band id="body">
                 <Cell text="bind:USER_ID" edittype="normal"/>
@@ -41,7 +41,7 @@
           </Formats>
         </Grid>
         <Button id="btn_row_add" taborder="1" text="+" left="1136" top="99" height="37" width="53" onclick="btn_row_add_onclick"/>
-        <Button id="btn_row_delete" taborder="2" text="-" left="1199" top="99" height="37" width="53"/>
+        <Button id="btn_row_delete" taborder="2" text="-" left="1199" top="99" height="37" width="53" onclick="btn_row_delete_onclick"/>
         <Div id="Div00" taborder="3" left="0" top="0" height="77" background="lightgrey" right="0" text="">
           <Layouts>
             <Layout>
@@ -51,10 +51,10 @@
               <Static id="Static00_00" taborder="3" text="이름" left="296" top="18" width="64" height="40"/>
               <Static id="Static00_00_00" taborder="4" text="등급" left="586" top="18" width="64" height="40"/>
               <Combo id="cb_level" taborder="5" left="633" top="20" width="200" height="37" innerdataset="ds_level" codecolumn="LEVEL_ID" datacolumn="LEVEL" onitemchanged="Div00_cb_level_onitemchanged"/>
-              <Button id="btn_exel" taborder="6" text="엑셀" left="871" top="18" width="80" height="40"/>
+              <Button id="btn_exel" taborder="6" text="엑셀" left="871" top="18" width="80" height="40" onclick="Div00_btn_exel_onclick"/>
               <Button id="btn_search" taborder="7" text="조회" left="971" top="18" width="80" height="40" onclick="Div00_btn_search_onclick"/>
               <Button id="btn_save" taborder="8" text="저장" left="1071" top="18" width="80" height="40" onclick="Div00_btn_save_onclick"/>
-              <Button id="btn_delete" taborder="9" text="삭제" left="1161" top="18" width="80" height="40"/>
+              <Button id="btn_delete" taborder="9" text="삭제" left="1161" top="18" width="80" height="40" onclick="Div00_btn_delete_onclick"/>
             </Layout>
           </Layouts>
         </Div>
@@ -109,7 +109,7 @@
           </Row>
           <Row>
             <Col id="LEVEL_ID">P</Col>
-            <Col id="LEVEL">플래티넘</Col>
+            <Col id="LEVEL">플레티넘</Col>
           </Row>
         </Rows>
       </Dataset>
@@ -221,6 +221,18 @@ this.Div00_btn_save_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
 		callBackFnc,
 		bAsync
 	);
+};
+
+this.btn_row_delete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var row = this.Grid00.getSelectedRows();
+	
+	this.ds_users.deleteRow(row);
+};
+
+this.Div00_btn_delete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn_row_delete_onclick();
 };
 ]]></Script>
     <Bind>

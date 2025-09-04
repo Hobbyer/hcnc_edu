@@ -12,10 +12,10 @@
 			FROM USERS
 			WHERE 1=1
 			<if test="USER_ID != null and USER_ID != ''">
-				AND USER_ID = #{USER_ID}
+				AND USER_ID LIKE CONCAT('%', #{USER_ID}, '%')
 			</if>
 			<if test="NAME != null and NAME != ''">
-				AND NAME = #{NAME}
+				AND NAME LIKE CONCAT('%', #{NAME}, '%')
 			</if>
 			<if test="LEVEL != null and LEVEL != '' and LEVEL != '-전체-'">
 				AND LEVEL = #{LEVEL}
@@ -48,5 +48,34 @@
 				, #{user_recommend}
 			)
 	</insert>
+	
+	<insert id="createUser" parameterType="java.util.Map">
+		INSERT INTO USERS (USER_ID, NAME, BIRTH_DAY, ADDRESS, LEVEL, POINT, IS_USE)
+			VALUES(
+				#{USER_ID}
+				, #{NAME}
+				, #{BIRTH_DAY}
+				, #{ADDRESS}
+				, #{LEVEL}
+				, #{POINT}
+				, #{IS_USE}
+			)
+	</insert>
+	
+	<update id="updateUser" parameterType="java.util.Map">
+		UPDATE USERS 
+			SET NAME = #{NAME}
+				, BIRTH_DAY = #{BIRTH_DAY}
+				, ADDRESS = #{ADDRESS}
+				, LEVEL = #{LEVEL}
+				, POINT = #{POINT}
+				, IS_USE = #{IS_USE}
+			WHERE USER_ID = #{USER_ID}
+	</update>
+	
+	<delete id="deleteUser">
+		DELETE FROM USERS
+			WHERE USER_ID = #{USER_ID}
+	</delete>
 	
 </mapper>

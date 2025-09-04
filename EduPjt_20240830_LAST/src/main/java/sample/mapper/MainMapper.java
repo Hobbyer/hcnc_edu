@@ -18,6 +18,12 @@ public interface MainMapper {
 	List<HashMap<String, Object>> readUsers();
 
 	List<HashMap<String, Object>> getUser(Map<String, Object> searchUser);
+
+	int deleteUser(Map<String, Object> map);
+
+	int createUser(Map<String, Object> map);
+
+	int updateUser(Map<String, Object> map);
 	
 	
 }

@@ -28,7 +28,7 @@
 
 
             obj = new Dataset("ds_level", this);
-            obj._setContents("<ColumnInfo><Column id=\"LEVEL_ID\" type=\"STRING\" size=\"256\"/><Column id=\"LEVEL\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"LEVEL_ID\">I</Col><Col id=\"LEVEL\">일반</Col></Row><Row><Col id=\"LEVEL_ID\">B</Col><Col id=\"LEVEL\">브론즈</Col></Row><Row><Col id=\"LEVEL_ID\">S</Col><Col id=\"LEVEL\">실버</Col></Row><Row><Col id=\"LEVEL_ID\">G</Col><Col id=\"LEVEL\">골드</Col></Row><Row><Col id=\"LEVEL_ID\">P</Col><Col id=\"LEVEL\">플래티넘</Col></Row></Rows>");
+            obj._setContents("<ColumnInfo><Column id=\"LEVEL_ID\" type=\"STRING\" size=\"256\"/><Column id=\"LEVEL\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"LEVEL_ID\">I</Col><Col id=\"LEVEL\">일반</Col></Row><Row><Col id=\"LEVEL_ID\">B</Col><Col id=\"LEVEL\">브론즈</Col></Row><Row><Col id=\"LEVEL_ID\">S</Col><Col id=\"LEVEL\">실버</Col></Row><Row><Col id=\"LEVEL_ID\">G</Col><Col id=\"LEVEL\">골드</Col></Row><Row><Col id=\"LEVEL_ID\">P</Col><Col id=\"LEVEL\">플레티넘</Col></Row></Rows>");
             this.addChild(obj.name, obj);
 
 
@@ -41,7 +41,7 @@
             obj.set_taborder("0");
             obj.set_binddataset("ds_users");
             obj.set_autofittype("col");
-            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/></Columns><Rows><Row size=\"24\" band=\"head\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"회원ID\"/><Cell col=\"1\" text=\"이름\"/><Cell col=\"2\" text=\"생년월일\"/><Cell col=\"3\" text=\"주소\"/><Cell col=\"4\" text=\"등급\"/><Cell col=\"5\" text=\"포인트\"/><Cell col=\"6\" text=\"회원유무\"/></Band><Band id=\"body\"><Cell text=\"bind:USER_ID\" edittype=\"normal\"/><Cell col=\"1\" text=\"bind:NAME\" edittype=\"normal\"/><Cell col=\"2\" text=\"bind:BIRTH_DAY\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:ADDRESS\" edittype=\"normal\"/><Cell col=\"4\" text=\"bind:LEVEL\" edittype=\"normal\"/><Cell col=\"5\" text=\"bind:POINT\" edittype=\"normal\"/><Cell col=\"6\" text=\"bind:IS_USE\" edittype=\"normal\"/></Band></Format></Formats>");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/></Columns><Rows><Row size=\"24\" band=\"head\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"회원ID\"/><Cell col=\"1\" text=\"이름\"/><Cell col=\"2\" text=\"생년월일\"/><Cell col=\"3\" text=\"주소\"/><Cell col=\"4\" text=\"등급\"/><Cell col=\"5\" text=\"포인트\"/><Cell col=\"6\" text=\"휴면유무\"/></Band><Band id=\"body\"><Cell text=\"bind:USER_ID\" edittype=\"normal\"/><Cell col=\"1\" text=\"bind:NAME\" edittype=\"normal\"/><Cell col=\"2\" text=\"bind:BIRTH_DAY\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:ADDRESS\" edittype=\"normal\"/><Cell col=\"4\" text=\"bind:LEVEL\" edittype=\"normal\"/><Cell col=\"5\" text=\"bind:POINT\" edittype=\"normal\"/><Cell col=\"6\" text=\"bind:IS_USE\" edittype=\"normal\"/></Band></Format></Formats>");
             this.addChild(obj.name, obj);
 
             obj = new Button("btn_row_add","1136","99","53","37",null,null,null,null,null,null,this);
@@ -234,6 +234,18 @@
         	);
         };
 
+        this.btn_row_delete_onclick = function(obj,e)
+        {
+        	var row = this.Grid00.getSelectedRows();
+
+        	this.ds_users.deleteRow(row);
+        };
+
+        this.Div00_btn_delete_onclick = function(obj,e)
+        {
+        	this.btn_row_delete_onclick();
+        };
+
         });
         
         // Regist UI Components Event
@@ -241,9 +253,12 @@
         {
             this.addEventHandler("onload",this.Form_UserControl_onload,this);
             this.btn_row_add.addEventHandler("onclick",this.btn_row_add_onclick,this);
+            this.btn_row_delete.addEventHandler("onclick",this.btn_row_delete_onclick,this);
             this.Div00.form.cb_level.addEventHandler("onitemchanged",this.Div00_cb_level_onitemchanged,this);
+            this.Div00.form.btn_exel.addEventHandler("onclick",this.Div00_btn_exel_onclick,this);
             this.Div00.form.btn_search.addEventHandler("onclick",this.Div00_btn_search_onclick,this);
             this.Div00.form.btn_save.addEventHandler("onclick",this.Div00_btn_save_onclick,this);
+            this.Div00.form.btn_delete.addEventHandler("onclick",this.Div00_btn_delete_onclick,this);
         };
         this.loadIncludeScript("Form_UserControl.xfdl");
         this.loadPreloadList();

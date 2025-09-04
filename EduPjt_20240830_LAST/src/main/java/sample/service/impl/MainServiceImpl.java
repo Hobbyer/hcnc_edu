@@ -92,4 +92,25 @@ public class MainServiceImpl implements MainService {
 		// TODO Auto-generated method stub
 		return mainMapper.getUser(searchUser);
 	}
+
+
+	@Override
+	public int deleteUser(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mainMapper.deleteUser(map);
+	}
+
+
+	@Override
+	public int createUser(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mainMapper.createUser(map);
+	}
+
+
+	@Override
+	public int updateUser(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mainMapper.updateUser(map);
+	}
 }

@@ -166,9 +166,26 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/usersCUD.do")
-	public NexacroResult usersCUD(@ParamDataSet(name="ds_users", required = false) Map<String, Object> param) {
+	public NexacroResult usersCUD(@ParamDataSet(name="ds_users", required = false) List<Map<String, Object>> param) {
 		
-		NexacroResult result = new 
+		NexacroResult result = new NexacroResult();
+		
+		System.out.println(param);
+		
+		for(int i=0; i < param.size(); i++) {
+			
+			System.out.println(param.get(i));
+			
+			if("3".equals(param.get(i).get("DataSetRowType").toString())){
+				mainService.deleteUser(param.get(i));
+			} else if("2".equals(param.get(i).get("DataSetRowType").toString())){
+				mainService.updateUser(param.get(i));
+			} else if("1".equals(param.get(i).get("DataSetRowType").toString())) {
+				mainService.createUser(param.get(i));
+			} else {
+				System.out.println("쿼리 실행중 오류발생");
+			}
+		}
 		
 		return result;
 	}
