@@ -9,7 +9,7 @@
         
         this.on_create = function()
         {
-            this.set_name("Form_UserControl");
+            this.set_name("Form_ProductControl");
             this.set_titletext("New Form");
             if (Form == this.constructor)
             {
@@ -128,11 +128,11 @@
         
         // User Script
         this.registerScript("Form_ProductControl.xfdl", function() {
-
         this.Form_ProductControl_onload = function(obj,e)
         {
         	this.read_products();
         };
+
 
         this.read_products = function()
         {
@@ -152,12 +152,14 @@
 
         };
 
+
+
         });
         
         // Regist UI Components Event
         this.on_initEvent = function()
         {
-            this.addEventHandler("onload",this.Form_UserControl_onload,this);
+            this.addEventHandler("onload",this.Form_ProductControl_onload,this);
             this.btn_row_add.addEventHandler("onclick",this.btn_row_add_onclick,this);
             this.btn_row_delete.addEventHandler("onclick",this.btn_row_delete_onclick,this);
             this.Div00.form.cb_level.addEventHandler("onitemchanged",this.Div00_cb_level_onitemchanged,this);
