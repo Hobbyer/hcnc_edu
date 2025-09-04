@@ -60,39 +60,31 @@
             this.addChild(frame0.name, frame0);
             this.frame=frame0;
 
-            var frame1 = new ChildFrame("TopUserInfo",null,null,null,null,null,null,"user::Form_Top_UserInfo.xfdl",frame0);
+            var frame1 = new ChildFrame("TopFrame",null,null,null,null,null,null,"FrameBase::Form_Top.xfdl",frame0);
             frame1.set_showtitlebar("false");
             frame1.set_showstatusbar("false");
             frame1.set_visible("false");
             frame0.addChild(frame1.name, frame1);
-            frame1.set_formurl("user::Form_Top_UserInfo.xfdl");
+            frame1.set_formurl("FrameBase::Form_Top.xfdl");
 
 
-            var frame2 = new ChildFrame("TopFrame",null,null,null,null,null,null,"FrameBase::Form_Top.xfdl",frame0);
-            frame2.set_showtitlebar("false");
-            frame2.set_showstatusbar("false");
-            frame2.set_visible("false");
+            var frame2 = new HFrameSet("HFrameSet00",null,null,null,null,null,null,frame0);
+            frame2.set_separatesize("200,*");
             frame0.addChild(frame2.name, frame2);
-            frame2.set_formurl("FrameBase::Form_Top.xfdl");
+
+            var frame3 = new ChildFrame("LeftFrame",null,null,null,null,null,null,"FrameBase::Form_Left.xfdl",frame2);
+            frame3.set_showtitlebar("false");
+            frame3.set_showstatusbar("false");
+            frame3.set_visible("false");
+            frame2.addChild(frame3.name, frame3);
+            frame3.set_formurl("FrameBase::Form_Left.xfdl");
 
 
-            var frame3 = new HFrameSet("HFrameSet00",null,null,null,null,null,null,frame0);
-            frame3.set_separatesize("200,*");
-            frame0.addChild(frame3.name, frame3);
-
-            var frame4 = new ChildFrame("LeftFrame",null,null,null,null,null,null,"FrameBase::Form_Left.xfdl",frame3);
+            var frame4 = new ChildFrame("WorkFrame",null,null,null,null,null,null,"FrameBase::Form_Main.xfdl",frame2);
             frame4.set_showtitlebar("false");
             frame4.set_showstatusbar("false");
-            frame4.set_visible("false");
-            frame3.addChild(frame4.name, frame4);
-            frame4.set_formurl("FrameBase::Form_Left.xfdl");
-
-
-            var frame5 = new ChildFrame("WorkFrame",null,null,null,null,null,null,"FrameBase::Form_Main.xfdl",frame3);
-            frame5.set_showtitlebar("false");
-            frame5.set_showstatusbar("false");
-            frame3.addChild(frame5.name, frame5);
-            frame5.set_formurl("FrameBase::Form_Main.xfdl");
+            frame2.addChild(frame4.name, frame4);
+            frame4.set_formurl("FrameBase::Form_Main.xfdl");
         };
         
         this.on_initEvent = function()

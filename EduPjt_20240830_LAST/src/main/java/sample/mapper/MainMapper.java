@@ -16,6 +16,8 @@ public interface MainMapper {
 	int joinUser(Map<String, Object> param);
 
 	List<HashMap<String, Object>> readUsers();
+
+	List<HashMap<String, Object>> getUser(Map<String, Object> searchUser);
 	
 	
 }

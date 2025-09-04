@@ -5,7 +5,6 @@
       <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="1280" height="720" titletext="TopLeftFrame">
         <VFrameSet id="VFrameSet00" separatesize="50,*">
           <Frames>
-            <ChildFrame id="TopUserInfo" showtitlebar="false" showstatusbar="false" formurl="user::Form_Top_UserInfo.xfdl" visible="false"/>
             <ChildFrame id="TopFrame" showtitlebar="false" showstatusbar="false" formurl="FrameBase::Form_Top.xfdl" visible="false"/>
             <HFrameSet id="HFrameSet00" separatesize="200,*">
               <Frames>

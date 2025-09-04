@@ -42,6 +42,22 @@ public class MainController {
 		return result;
 	}
 	
+	
+	@RequestMapping(value="/getUser.do")
+	public NexacroResult getUser(@ParamDataSet(name="ds_search_user", required=false) Map<String, Object> searchUser) {
+		
+		NexacroResult result = new NexacroResult();
+		
+		System.out.println(searchUser);
+		
+		List<HashMap<String, Object>> searchResult = mainService.getUser(searchUser);
+		
+		result.addDataSet("ds_users", searchResult);
+		
+		return result;
+	}
+	
+	
 	@RequestMapping(value="/selectUser.do")
 	public NexacroResult selectUser(@ParamDataSet(name="ds_user", required = false) Map<String, Object> dsUser, HttpServletRequest request) {
 		
@@ -147,6 +163,14 @@ public class MainController {
 		
 		return result;
 		
+	}
+	
+	@RequestMapping(value="/usersCUD.do")
+	public NexacroResult usersCUD(@ParamDataSet(name="ds_users", required = false) Map<String, Object> param) {
+		
+		NexacroResult result = new 
+		
+		return result;
 	}
 	 
 }

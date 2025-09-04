@@ -85,4 +85,11 @@ public class MainServiceImpl implements MainService {
 		// TODO Auto-generated method stub
 		return mainMapper.readUsers();
 	}
+
+
+	@Override
+	public List<HashMap<String, Object>> getUser(Map<String, Object> searchUser) {
+		// TODO Auto-generated method stub
+		return mainMapper.getUser(searchUser);
+	}
 }

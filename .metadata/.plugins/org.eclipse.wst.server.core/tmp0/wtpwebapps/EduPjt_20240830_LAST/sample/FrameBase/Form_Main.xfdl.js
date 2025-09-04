@@ -27,39 +27,54 @@
             this.addChild(obj.name, obj);
             
             // UI Components Initialize
-            obj = new Static("st_id","100","61","110","69",null,null,null,null,null,null,this);
-            obj.set_taborder("0");
-            obj.set_text("아이디");
-            obj.set_textAlign("center");
-            obj.set_background("red");
-            obj.set_border("1px solid black");
-            obj.set_color("#ffffff");
-            obj.set_font("bold 14px/normal \"Gulim\"");
-            this.addChild(obj.name, obj);
-
-            obj = new Static("st_pw","100","161","110","69",null,null,null,null,null,null,this);
-            obj.set_taborder("1");
-            obj.set_text("비밀번호");
-            obj.set_background("red");
-            obj.set_border("1px solid black");
-            obj.set_textAlign("center");
-            obj.set_color("#ffffff");
-            obj.set_font("bold 16px/normal \"Gulim\"");
-            this.addChild(obj.name, obj);
-
-            obj = new Edit("ed_id","230","75","222","41",null,null,null,null,null,null,this);
-            obj.set_taborder("2");
-            this.addChild(obj.name, obj);
-
-            obj = new Edit("ed_pw","230","174","224","36",null,null,null,null,null,null,this);
+            obj = new Div("Div00","100","40",null,null,"100","120",null,null,null,null,this);
             obj.set_taborder("3");
+            obj.set_border("2px solid black");
+            obj.set_text("");
             this.addChild(obj.name, obj);
 
-            obj = new Button("btn_login","476","112","157","56",null,null,null,null,null,null,this);
-            obj.set_taborder("4");
+            obj = new Edit("ed_id","549","285","250","40",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_border("1px solid black");
+            this.addChild(obj.name, obj);
+
+            obj = new Edit("ed_pw","549","336","250","40",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_password("true");
+            obj.set_border("1px solid black");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btn_login","575","405","130","35",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
             obj.set_text("로그인");
             obj.set_textAlign("center");
-            obj.set_font("bold 14pt/normal \"Arial\"");
+            obj.set_font("14pt/normal \"Arial\"");
+            obj.set_borderRadius("10px");
+            obj.set_background("white");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("st_id","460","284","75","43",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("아이디 :");
+            obj.set_font("bold 18px/normal \"Gulim\"");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("st_pw","441","333","91","43",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("패스워드 :");
+            obj.set_font("bold 18px/normal \"Gulim\"");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static00","554","227","221","46",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text("로그인을 해주세요");
+            obj.set_font("bold 18px/normal \"Gulim\"");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01","485","466","310","18",null,null,null,null,null,null,this);
+            obj.set_taborder("7");
+            obj.set_text("(주) 에이치씨엔씨에 오신걸 환영합니다.");
+            obj.set_font("bold 16px/normal \"Gulim\"");
             this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this
@@ -124,7 +139,12 @@
 
         				this.ds_login.clear();
 
-        				this.getOwnerFrame().set_formurl("board::Form_Board.xfdl");
+        				var objApp = nexacro.getApplication();
+
+        				objApp.mainframe.VFrameSet00.TopFrame.set_visible(true);
+        				objApp.mainframe.VFrameSet00.HFrameSet00.LeftFrame.set_visible(true);
+        				objApp.mainframe.VFrameSet00.HFrameSet00.WorkFrame.set_formurl("Base::Form_Base.xfdl");
+
         			} else {
         				alert("아이디 또는 비밀번호가 틀렸습니다.");
 
@@ -134,16 +154,20 @@
         		}
         	};
 
+        this.Static01_onclick = function(obj,e)
+        {
+
+        };
+
         });
         
         // Regist UI Components Event
         this.on_initEvent = function()
         {
             this.addEventHandler("onload",this.Form_Main_onload,this);
-            this.st_id.addEventHandler("onclick",this.Static00_onclick,this);
-            this.st_pw.addEventHandler("onclick",this.Static00_00_onclick,this);
             this.ed_id.addEventHandler("onchanged",this.ed_id_onchanged,this);
             this.btn_login.addEventHandler("onclick",this.Button00_onclick,this);
+            this.Static01.addEventHandler("onclick",this.Static01_onclick,this);
         };
         this.loadIncludeScript("Form_Main.xfdl");
         this.loadPreloadList();

@@ -110,8 +110,7 @@
         	"launch":"./Application_Desktop.xadl.js",
         	"quickview":"./Application_Desktop.xadl.quickview.js",
         	"form":[
-        				"./user/Form_Top_UserInfo.xfdl.js",
-        		"./FrameBase/Form_Top.xfdl.js",
+        				"./FrameBase/Form_Top.xfdl.js",
         		"./FrameBase/Form_Left.xfdl.js",
         		"./FrameBase/Form_Main.xfdl.js"
         	]

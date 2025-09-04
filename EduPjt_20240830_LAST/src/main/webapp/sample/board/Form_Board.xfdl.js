@@ -260,10 +260,6 @@
         	this.ds_list.addRow();
         };
 
-        this.btn_row_delete_onclick = function(obj,e)
-        {
-
-        };
 
         this.fn_popCallback = function(svcId, strVal)
         {

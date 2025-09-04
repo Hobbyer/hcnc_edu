@@ -3,8 +3,23 @@
 <mapper namespace="sample.mapper.MainMapper">
 
 	<select id="readUsers" resultType="java.util.HashMap">
-		SELECT USER_ID, NAME, ADDRESS
+		SELECT USER_ID, NAME, BIRTH_DAY, ADDRESS, LEVEL, POINT, IS_USE
 			FROM USERS
+	</select>
+	
+	<select id="getUser" parameterType="java.util.Map" resultType="java.util.HashMap">
+		SELECT USER_ID, NAME, BIRTH_DAY, ADDRESS, LEVEL, POINT, IS_USE
+			FROM USERS
+			WHERE 1=1
+			<if test="USER_ID != null and USER_ID != ''">
+				AND USER_ID = #{USER_ID}
+			</if>
+			<if test="NAME != null and NAME != ''">
+				AND NAME = #{NAME}
+			</if>
+			<if test="LEVEL != null and LEVEL != '' and LEVEL != '-전체-'">
+				AND LEVEL = #{LEVEL}
+			</if>
 	</select>
 
 	<select id="selectUser" parameterType="java.util.Map" resultType="java.util.HashMap">

@@ -15,4 +15,6 @@ public interface MainService {
 
 	List<HashMap<String, Object>> readUsers();
 
+	List<HashMap<String, Object>> getUser(Map<String, Object> searchUser);
+
 }

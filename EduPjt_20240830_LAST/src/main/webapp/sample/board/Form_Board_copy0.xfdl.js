@@ -286,9 +286,6 @@
 
         this.btn_board_save_onclick = function(obj,e)
         {
-
-
-
         	// 1. 필드 변수 선언
         	var strSvcId    = "boardCU";      // 서비스 ID
         	var strSvcUrl   = "svc::boardCU.do";      // 호출 URL
