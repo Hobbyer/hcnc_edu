@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="Form_ProductControl" width="1280" height="720" titletext="New Form" onload="Form_ProductControl_onload">
+  <Form id="Form_ProductControl" width="1280" height="720" titletext="New Form" onload="Form_ProductControl_onload" onsetfocus="Form_ProductControl_onload">
     <Layouts>
       <Layout height="720" width="1280">
         <Grid id="Grid00" taborder="0" left="0" top="160" right="0" bottom="0" binddataset="ds_products" autofittype="col">
@@ -31,14 +31,14 @@
                 <Cell col="7" text="할인금액"/>
               </Band>
               <Band id="body">
-                <Cell text="expr:currow + 1"/>
-                <Cell col="1" text="bind:CATE_CODE"/>
-                <Cell col="2" text="bind:SUB_CATE_CODE"/>
-                <Cell col="3" text="bind:STOCK"/>
-                <Cell col="4" text="bind:PROD_NAME"/>
-                <Cell col="5" text="bind:PRICE"/>
-                <Cell col="6" text="bind:DISCOUNT_YN"/>
-                <Cell col="7" text="bind:DISCOUNT_PRICE"/>
+                <Cell text="expr:currow + 1" edittype="normal"/>
+                <Cell col="1" text="bind:CATE_CODE" edittype="normal"/>
+                <Cell col="2" text="bind:SUB_CATE_CODE" edittype="normal"/>
+                <Cell col="3" text="bind:STOCK" edittype="normal"/>
+                <Cell col="4" text="bind:PROD_NAME" edittype="normal"/>
+                <Cell col="5" text="bind:PRICE" edittype="normal"/>
+                <Cell col="6" text="bind:DISCOUNT_YN" edittype="normal"/>
+                <Cell col="7" text="bind:DISCOUNT_PRICE" edittype="normal"/>
               </Band>
             </Format>
           </Formats>
@@ -49,14 +49,14 @@
           <Layouts>
             <Layout>
               <Static id="Static00" taborder="0" text="메인카테고리" left="16" top="18" width="84" height="40"/>
-              <Edit id="ed_userName" taborder="1" left="720" top="20" width="200" height="37"/>
+              <Edit id="ed_productName" taborder="1" left="720" top="20" width="200" height="37"/>
               <Static id="Static00_00" taborder="2" text="서브카테고리" left="326" top="18" width="87" height="40"/>
               <Static id="Static00_00_00" taborder="3" text="상품명" left="666" top="18" width="64" height="40"/>
-              <Combo id="cb_level" taborder="4" left="423" top="20" width="200" height="37" innerdataset="ds_sub_category" codecolumn="SUB_CATE_CODE" datacolumn="SUB_CATE_NAME" onitemchanged="Div00_cb_level_onitemchanged"/>
+              <Combo id="cb_subCategory" taborder="4" left="430" top="20" width="200" height="37" innerdataset="ds_sub_category" codecolumn="SUB_CATE_CODE" datacolumn="SUB_CATE_CODE" onitemchanged="Div00_cb_subCategory_onitemchanged"/>
               <Button id="btn_exel" taborder="5" text="엑셀" left="981" top="18" width="80" height="40" onclick="Div00_btn_exel_onclick"/>
               <Button id="btn_search" taborder="6" text="조회" left="1081" top="18" width="80" height="40" onclick="Div00_btn_search_onclick"/>
-              <Button id="btn_save" taborder="7" text="저장" left="1181" top="18" width="80" height="40" onclick="Div00_btn_save_onclick"/>
-              <Combo id="cb_level00" taborder="8" left="103" top="20" width="200" height="37" innerdataset="ds_main_category" codecolumn="CATE_CODE" datacolumn="CATE_NAME" onitemchanged="Div00_cb_level_onitemchanged"/>
+              <Button id="btn_create" taborder="7" text="등록" left="1181" top="18" width="80" height="40" onclick="Div00_btn_save_onclick"/>
+              <Combo id="cb_cate" taborder="8" left="103" top="20" width="200" height="37" innerdataset="ds_main_category" codecolumn="CATE_CODE" datacolumn="CATE_CODE" onitemchanged="Div00_cb_cate_onitemchanged"/>
             </Layout>
           </Layouts>
         </Div>
@@ -80,6 +80,9 @@
           <Column id="CATE_CODE" type="STRING" size="256"/>
           <Column id="CATE_NAME" type="STRING" size="256"/>
         </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
       </Dataset>
       <Dataset id="ds_sub_category">
         <ColumnInfo>
@@ -87,10 +90,15 @@
           <Column id="SUB_CATE_NAME" type="STRING" size="256"/>
           <Column id="CATE_CODE" type="STRING" size="256"/>
         </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
       </Dataset>
       <Dataset id="ds_search_product">
         <ColumnInfo>
           <Column id="PROD_NAME" type="STRING" size="256"/>
+          <Column id="CATE_CODE" type="STRING" size="256"/>
+          <Column id="SUB_CATE_CODE" type="STRING" size="256"/>
         </ColumnInfo>
         <Rows>
           <Row/>
@@ -102,13 +110,34 @@
 	this.read_products();
 };
 
+this.fn_callback = function(svcId, processCode, msg)
+{
+	if(svcId == "readProducts"){
+
+		this.ds_main_category.insertRow(0);
+		this.ds_sub_category.insertRow(0);
+		
+		this.ds_main_category.setColumn(insertRow, "CATE_CODE", "ALL");
+		this.ds_main_category.setColumn(insertRow, "CATE_NAME", "-전체-");
+		
+		this.ds_sub_category.setColumn(insertRow, "SUB_CATE_CODE", "ALL");
+		this.ds_sub_category.setColumn(insertRow, "SUB_CATE_NAME", "-전체-");
+		
+		this.Div00.form.cb_cate.set_index(0);
+		this.Div00.form.cb_subCategory.set_index(0);
+		
+		this.cb_subDept.set_readonly(true);
+	}
+
+};
+
 
 this.read_products = function()
 {
 	var strSvcID = "readProducts";	  // 트랜잭션 아이디
 	var strUrl = "svc::readProducts.do"; // 컨트롤러에 보내는거
 	var strInDatasets = "";
-	var strOutDatasets = "ds_products=ds_products";
+	var strOutDatasets = "ds_products=ds_products ds_main_category=ds_main_category ds_sub_category=ds_sub_category";
 	var strArg = "";
 	var callBack = "fn_callBack";
 	var inAsync = true;
@@ -118,13 +147,87 @@ this.read_products = function()
 
 this.btn_row_add_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	
+	this.ds_products.addRow();
 };
 
 
+
+this.btn_row_delete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var row = this.Grid00.getSelectedRows();
+	
+	this.ds_products.deleteRow(row);
+};
+
+
+this.Div00_cb_cate_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var cateCode = e.postvalue;
+	
+	if(cateCode === "ALL"){
+		this.ds_sub_category.filter("");
+		this.Div00.form.cb_subCategory.set_readonly(true);
+		this.Div00.form.cb_subCategory.set_value("ALL");
+	} else {
+		this.ds_search_product.setColumn(0, "CATE_CODE", cateCode);
+	
+		this.ds_sub_category.filter("CATE_CODE == '" + cateCode + "'");
+		this.Div00.form.cb_subCategory.set_readonly(false);
+		
+		this.ds_sub_category.insertRow(0);
+		this.ds_sub_category.setColumn(0, "SUB_CATE_CODE","ALL");
+		
+		this.Div00.form.cb_subCategory.set_index(0);
+	}
+};
+
+this.Div00_cb_subCategory_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var subCateCode = e.postvalue;
+	
+	this.ds_search_product.setColumn(0, "SUB_CATE_CODE", subCateCode);
+};
+
+this.Div00_btn_search_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+		var strSvcID = "searchProduct";	  // 트랜잭션 아이디
+		var strUrl = "svc::searchProduct.do"; // 컨트롤러에 보내는거
+		var strInDatasets = "ds_search_product=ds_search_product";
+		var strOutDatasets = "ds_products=ds_products";
+		var strArg = "";
+		var callBack = "fn_callBack";
+		var inAsync = true;
+
+		this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
+};
+
+this.Div00_btn_save_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	popup = new nexacro.ChildFrame;
+	
+	var dsCate = this.ds_main_category;
+	var dsSubCate = this.ds_sub_category;
+
+	var surl = "product::Form_CreateProduct.xfdl";
+	
+	var param = {
+		dsCate : dsCate,
+		dsSubCate : dsSubCate
+	};
+	
+	popup.init("updatePop", 0, 0, 800, 700, null, null, surl);
+	popup.set_dragmovetype("all");
+	popup.set_showtitlebar("상품등록");
+	popup.set_openalign("center middle");
+	popup.showModal(this.getOwnerFrame(), param, this, "fn_popCallback", true);
+};
 ]]></Script>
     <Bind>
-      <BindItem id="item1" compid="Div00.form.ed_userName" propid="value" datasetid="ds_search_product" columnid="PROD_NAME"/>
+      <BindItem id="item1" compid="Div00.form.ed_productName" propid="value" datasetid="ds_search_product" columnid="PROD_NAME"/>
+      <BindItem id="item0" compid="Div00.form.cb_cate" propid="text" datasetid="ds_main_category" columnid="CATE_CODE"/>
+      <BindItem id="item2" compid="Div00.form.cb_subCategory" propid="text" datasetid="ds_sub_category" columnid="SUB_CATE_CODE"/>
+      <BindItem id="item3" compid="Div00.form.cb_subCategory" propid="value" datasetid="ds_sub_category" columnid="SUB_CATE_CODE"/>
+      <BindItem id="item4" compid="Div00.form.cb_cate" propid="value" datasetid="ds_main_category" columnid="CATE_CODE"/>
     </Bind>
   </Form>
 </FDL>

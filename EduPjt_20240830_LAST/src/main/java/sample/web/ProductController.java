@@ -78,14 +78,48 @@ public class ProductController {
 	@RequestMapping(value="/readProducts.do")
 	public NexacroResult readProducts() {
 		
-		System.out.println("ooooooooooo");
-		
 		NexacroResult result = new NexacroResult();
 		
 		List<HashMap<String, Object>> productsList = productService.readProducts();
 		
-		result.addDataSet("ds_products", productsList);
+		List<HashMap<String, Object>> mainCateList = productService.readCategory();
 		
+		List<HashMap<String, Object>> subCateList = productService.readSubCategory();
+		
+		result.addDataSet("ds_products", productsList);
+		result.addDataSet("ds_main_category", mainCateList);
+		result.addDataSet("ds_sub_category", subCateList);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/searchProduct.do")
+	public NexacroResult searchProduct(@ParamDataSet(name="ds_search_product", required = false) HashMap<String, Object> param) {
+		
+		System.out.println(param);
+		
+		NexacroResult result = new NexacroResult();
+		
+//		List<HashMap<String, Object>> productsList = productService.readProducts();
+		
+//		result.addDataSet("ds_products", productsList);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/insetProduct.do")
+	public NexacroResult insertProduct(@ParamDataSet(name="dsProduct", required = false) Map<String, Object> param) {
+		
+		NexacroResult result = new NexacroResult();
+		
+		System.out.println(param);
+		
+		try {
+			productService.insertProduct(param);
+		} catch(Exception e) {
+			result.setErrorCode(-1);
+			result.setErrorMsg("쿼리 실행중 오류 발생");
+		}
 		return result;
 	}
 }

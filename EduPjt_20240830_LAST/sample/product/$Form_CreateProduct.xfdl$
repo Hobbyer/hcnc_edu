@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_CreateProduct" width="530" height="360" titletext="New Form" onload="Form_CreateProduct_onload">
+    <Layouts>
+      <Layout height="360" width="530">
+        <Static id="st_cateCode" taborder="0" text="카테고리코드" left="126" top="26" width="100" height="30"/>
+        <Static id="st_subCateCode" taborder="1" text="서브카테고리코드" left="126" top="72" width="100" height="30"/>
+        <Static id="st_productName" taborder="2" text="상품명" left="126" top="118" width="100" height="30"/>
+        <Static id="st_price" taborder="3" text="금액" left="126" top="160" width="100" height="30"/>
+        <Static id="st_discountYN" taborder="4" text="할인여부" left="126" top="207" width="100" height="30"/>
+        <Static id="st_discountRate" taborder="5" text="할인금액" left="126" top="253" width="100" height="30"/>
+        <Combo id="cb_cateCode" taborder="6" left="254" top="26" width="150" height="30" innerdataset="dsCate" codecolumn="CATE_CODE" datacolumn="CATE_CODE" onitemchanged="cb_cateCode_onitemchanged"/>
+        <Combo id="cb_subCateCode" taborder="7" left="254" top="72" width="150" height="30" innerdataset="dsSubCate" codecolumn="SUB_CATE_CODE" datacolumn="SUB_CATE_CODE" onitemchanged="cb_subCateCode_onitemchanged"/>
+        <Edit id="Edit00" taborder="8" left="254" top="118" width="150" height="30"/>
+        <Edit id="Edit01" taborder="9" left="254" top="160" width="150" height="30"/>
+        <Combo id="Combo02" taborder="10" text="Combo02" left="254" top="207" width="150" height="30" innerdataset="dsDisCountYN" codecolumn="DISCOUNT_YN" datacolumn="DISCOUNT_YN"/>
+        <Edit id="Edit02" taborder="11" left="254" top="253" width="150" height="30"/>
+        <Button id="btn_create" taborder="12" text="등록" left="213" top="311" width="104" height="39" onclick="btn_create_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Form_CreateProduct_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+	var dsCate = this.parent.dsCate;
+	var dsSubCate = this.parent.dsSubCate;
+	
+	trace(dsCate);
+	
+	this.dsCate.copyData(dsCate);
+	this.dsSubCate.copyData(dsSubCate);
+};
+
+this.fn_callback = function(svcId, errCd, errMsg)
+{
+	if(svcId == "insetProduct"){
+		if(errCd == -1){
+			this.alert(errMsg);
+		} else {
+			this.alert("상품 등록 완료!");
+			
+			this.close();
+		}
+	}
+};
+
+this.cb_cateCode_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var cateCode = e.postvalue;
+	
+	this.dsSubCate.filter("CATE_CODE == '" + cateCode + "'");
+	
+};
+
+this.cb_subCateCode_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	
+};
+
+this.btn_create_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var strSvcID = "insetProduct";	  // 트랜잭션 아이디
+	var strUrl = "svc::insetProduct.do"; // 컨트롤러에 보내는거
+	var strInDatasets = "dsProduct=dsProduct";
+	var strOutDatasets = "";
+	var strArg = "";
+	var callBack = "fn_callBack";
+	var inAsync = true;
+	
+	this.transaction(strSvcID, strUrl, strInDatasets, strOutDatasets, strArg, callBack, inAsync);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsCate">
+        <ColumnInfo>
+          <Column id="CATE_CODE" type="STRING" size="256"/>
+          <Column id="CATE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSubCate">
+        <ColumnInfo>
+          <Column id="SUB_CATE_CODE" type="STRING" size="256"/>
+          <Column id="SUB_CATE_NAME" type="STRING" size="256"/>
+          <Column id="CATE_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDisCountYN">
+        <ColumnInfo>
+          <Column id="DISCOUNT_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DISCOUNT_YN">Y</Col>
+          </Row>
+          <Row>
+            <Col id="DISCOUNT_YN">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsProduct">
+        <ColumnInfo>
+          <Column id="SUB_CATE_CODE" type="STRING" size="256"/>
+          <Column id="PROD_NAME" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="DISCOUNT_YN" type="STRING" size="256"/>
+          <Column id="DISCOUNT_PRICE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Edit00" propid="value" datasetid="dsProduct" columnid="PROD_NAME"/>
+      <BindItem id="item1" compid="Edit01" propid="value" datasetid="dsProduct" columnid="PRICE"/>
+      <BindItem id="item2" compid="Combo02" propid="value" datasetid="dsProduct" columnid="DISCOUNT_YN"/>
+      <BindItem id="item3" compid="Edit02" propid="value" datasetid="dsProduct" columnid="DISCOUNT_PRICE"/>
+      <BindItem id="item4" compid="cb_subCateCode" propid="value" datasetid="dsProduct" columnid="SUB_CATE_CODE"/>
+    </Bind>
+  </Form>
+</FDL>

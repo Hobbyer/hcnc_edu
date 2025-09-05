@@ -47,4 +47,16 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.readProducts();
 	}
 
+	@Override
+	public List<HashMap<String, Object>> readSubCategory() {
+		// TODO Auto-generated method stub
+		return productMapper.readSubCategory();
+	}
+
+	@Override
+	public int insertProduct(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return productMapper.insertProduct(param);
+	}
+
 }

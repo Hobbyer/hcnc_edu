@@ -15,5 +15,9 @@ public interface ProductService {
 	int saveProduct(Map<String, Object> param);
 
 	List<HashMap<String, Object>> readProducts();
+
+	List<HashMap<String, Object>> readSubCategory();
+
+	int insertProduct(Map<String, Object> param);
 	
 }

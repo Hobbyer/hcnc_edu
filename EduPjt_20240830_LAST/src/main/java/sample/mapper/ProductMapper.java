@@ -19,5 +19,9 @@ public interface ProductMapper {
 
 	List<HashMap<String, Object>> readProducts();
 
+	List<HashMap<String, Object>> readSubCategory();
+
+	int insertProduct(Map<String, Object> param);
+
 	
 }
